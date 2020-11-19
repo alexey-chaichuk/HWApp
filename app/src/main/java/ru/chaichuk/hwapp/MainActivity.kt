@@ -14,4 +14,8 @@ class MainActivity : AppCompatActivity() {
     fun openMovieDetails(view: View) {
         startActivity(Intent(this, MovieDetailsActivity::class.java))
     }
+
+    fun openMovies(view: View) {
+        startActivity(Intent(this, MoviesActivity::class.java))
+    }
 }

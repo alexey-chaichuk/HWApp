@@ -7,13 +7,26 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonMovies"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:onClick="openMovieDetails"
-        android:text="MovieDetailActivity"
+        android:text="open Movies Activity"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonMovieDetails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="openMovies"
+        android:text="open Movie Details Activity"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
