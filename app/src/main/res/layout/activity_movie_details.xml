@@ -86,14 +86,13 @@
 
         <RatingBar
             android:id="@+id/ratingBar2"
-            style="@style/mySmallRatingBar"
+            style="@style/mySmallRatingBarStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:isIndicator="false"
             android:numStars="5"
             android:rating="4"
-            android:theme="@style/mySmallRatingBar"
+            android:theme="@style/mySmallRatingBarTheme"
             app:layout_constraintBottom_toBottomOf="@+id/textView4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />

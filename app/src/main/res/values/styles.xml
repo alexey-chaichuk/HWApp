@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="mySmallRatingBar" parent="android:style/Widget.Material.RatingBar.Small">
+    <style name="mySmallRatingBarTheme" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/white</item>
         <item name="colorControlActivated">@color/star_red</item>
     </style>
+
+    <style name="mySmallRatingBarStyle" parent="android:style/Widget.Material.RatingBar.Small">
+
+    </style>
+
 </resources>
