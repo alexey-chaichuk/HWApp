@@ -8,5 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="background">#191926</color>
-    <color name="text_purple">#FF3466</color>
+    <color name="text_red">#FF3466</color>
+    <color name="star_red">#FF3365</color>
+    <color name="star_grey">#6D6D80</color>
+    <color name="text_gray">#D8D8D8</color>
 </resources>
