@@ -110,6 +110,8 @@
             android:text="@string/back_btn"
             android:textColor="@color/white"
             android:textStyle="bold"
+            android:drawablePadding="4dp"
+            android:drawableLeft="@drawable/chevron_left_white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageView" />
 

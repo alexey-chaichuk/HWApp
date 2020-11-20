@@ -17,5 +17,5 @@
     <string name="black_widow_name">Black Widow</string>
     <string name="wonder_woman_name">Wonder Woman</string>
     <string name="age_limit_13">13+</string>
-    <string name="back_btn"><![CDATA[< Back]]></string>
+    <string name="back_btn">Back</string>
 </resources>
