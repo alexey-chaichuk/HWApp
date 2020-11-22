@@ -12,121 +12,6 @@
         android:background="@color/background"
         tools:context=".MoviesActivity">
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:contentDescription="@string/movies_icon"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guidelineTop"
-            app:srcCompat="@drawable/movies_icon" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginStart="8dp"
-            android:text="@string/movies_list"
-            android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView2" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:barrierMargin="16dp"
-            app:constraint_referenced_ids="film1,film2"
-            tools:layout_editor_absoluteY="354dp" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/film1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/film2"
-            app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-            app:layout_constraintTop_toBottomOf="@+id/guidelineTop2">
-
-
-            <ImageView
-                android:id="@+id/imageView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/avengers_name"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/avengers_end_game" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/film2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-            app:layout_constraintStart_toEndOf="@+id/film1"
-            app:layout_constraintTop_toBottomOf="@+id/guidelineTop2">
-
-            <ImageView
-                android:id="@+id/imageView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/tenet_name"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.333"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/tenet" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/film3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/film4"
-            app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-            app:layout_constraintTop_toBottomOf="@+id/barrier1">
-
-
-            <ImageView
-                android:id="@+id/imageView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/black_widow_name"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/black_widow" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/film4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-            app:layout_constraintStart_toEndOf="@+id/film3"
-            app:layout_constraintTop_toBottomOf="@+id/barrier1">
-
-            <ImageView
-                android:id="@+id/imageView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/wonder_woman_name"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.333"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/wonder_woman" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineTop"
             android:layout_width="wrap_content"
@@ -154,6 +39,78 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_end="16dp" />
+
+        <ImageView
+            android:id="@+id/imageViewTitleIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:contentDescription="@string/movies_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guidelineTop"
+            app:srcCompat="@drawable/movies_icon" />
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/movies_list"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewTitleIcon"
+            app:layout_constraintStart_toEndOf="@+id/imageViewTitleIcon"
+            app:layout_constraintTop_toTopOf="@+id/imageViewTitleIcon" />
+
+        <ImageView
+            android:id="@+id/imageViewMovie1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/avengers_name"
+            app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+            app:layout_constraintTop_toTopOf="@+id/guidelineTop2"
+            app:layout_constraintEnd_toStartOf="@id/imageViewMovie2"
+            app:srcCompat="@drawable/avengers_end_game" />
+
+        <ImageView
+            android:id="@+id/imageViewMovie2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/tenet_name"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+            app:layout_constraintTop_toTopOf="@+id/guidelineTop2"
+            app:layout_constraintStart_toEndOf="@+id/imageViewMovie1"
+            app:srcCompat="@drawable/tenet" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierMovie1Movie2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:barrierMargin="16dp"
+            app:constraint_referenced_ids="imageViewMovie1,imageViewMovie2"
+            tools:layout_editor_absoluteY="354dp" />
+
+        <ImageView
+            android:id="@+id/imageViewMovie3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/black_widow_name"
+            app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewMovie4"
+            app:layout_constraintTop_toTopOf="@+id/barrierMovie1Movie2"
+            app:srcCompat="@drawable/black_widow" />
+
+        <ImageView
+            android:id="@+id/imageViewMovie4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/wonder_woman_name"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+            app:layout_constraintStart_toEndOf="@+id/imageViewMovie3"
+            app:layout_constraintTop_toTopOf="@+id/barrierMovie1Movie2"
+            app:srcCompat="@drawable/wonder_woman" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
