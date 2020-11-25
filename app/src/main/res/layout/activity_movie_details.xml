@@ -23,8 +23,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/avengers_bg"
-            android:foreground="@drawable/rect_gradient" />
+            app:srcCompat="@drawable/avengers_bg" />
+
+        <ImageView
+            android:id="@+id/imageViewAvengersMovieGradient"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/avengers"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewAvengersMovieBg"
+            app:layout_constraintEnd_toEndOf="@+id/imageViewAvengersMovieBg"
+            app:layout_constraintStart_toStartOf="@+id/imageViewAvengersMovieBg"
+            app:layout_constraintTop_toTopOf="@+id/imageViewAvengersMovieBg"
+            app:srcCompat="@drawable/rect_gradient" />
 
         <ImageView
             android:id="@+id/imageViewRDowneyJr"
