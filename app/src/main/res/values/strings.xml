@@ -19,8 +19,6 @@
     <string name="wonder_woman_name">Wonder Woman</string>
     <string name="age_limit_13">13+</string>
     <string name="back_btn">Back</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="action_adventure_drama">Action, Adventure, Drama</string>
     <string name="_137_min">137 MIN</string>
 </resources>
