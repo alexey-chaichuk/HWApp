@@ -24,9 +24,6 @@ class MainActivity :
     }
 
     override fun onDetailsBack() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.mainFrame, MoviesListFragment())
-            .addToBackStack(null)
-            .commit()
+        supportFragmentManager.popBackStack()
     }
 }
