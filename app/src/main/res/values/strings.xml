@@ -3,6 +3,7 @@
     <string name="movies_list">Movies list</string>
     <string name="movies_icon">movies icon</string>
     <string name="avengers_name">Avengers: \nEnd Game</string>
+    <string name="avengers_name_small">Avengers: End Game</string>
     <string name="action_adventure_fantasy">Action, Adventure, Fantasy</string>
     <string name="_125_reviews">125 REVIEWS</string>
     <string name="avengers">avengers</string>
@@ -18,4 +19,6 @@
     <string name="wonder_woman_name">Wonder Woman</string>
     <string name="age_limit_13">13+</string>
     <string name="back_btn">Back</string>
+    <string name="action_adventure_drama">Action, Adventure, Drama</string>
+    <string name="_137_min">137 MIN</string>
 </resources>
