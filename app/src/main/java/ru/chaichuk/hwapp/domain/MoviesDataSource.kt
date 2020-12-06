@@ -16,17 +16,21 @@ class MoviesDataSource {
 
     fun getMovies(): List<Movie> {
         return listOf(
-            Movie("Avengers: End Game", "some movie1", R.drawable.avengers_end_game, "13+", 4F, "137 MIN", false, "125 REVIEWS"),
-            Movie("Tenet", "some movie2", R.drawable.tenet, "16+", 5F, "97 MIN", true, "98 REVIEWS"),
-            Movie("Black Widow", "some movie3", R.drawable.black_widow, "13+", 4F, "102 MIN", false, "38 REVIEWS"),
-            Movie("Wonder Woman 1984", "some movie3", R.drawable.wonder_woman, "13+", 5F, "120 MIN", false, "74 REVIEWS"),
+            Movie("Avengers: End Game", "some movie1", R.drawable.avengers_end_game, "13+", 4F, "137 MIN", false, "125 REVIEWS", "Action, Adventure, Drama"),
+            Movie("Tenet", "some movie2", R.drawable.tenet, "16+", 5F, "97 MIN", true, "98 REVIEWS", "Action, Sci-Fi, Thriller "),
+            Movie("Black Widow", "some movie3", R.drawable.black_widow, "13+", 4F, "102 MIN", false, "38 REVIEWS", "Action, Adventure, Sci-Fi"),
+            Movie("Wonder Woman 1984", "some movie3", R.drawable.wonder_woman, "13+", 5F, "120 MIN", false, "74 REVIEWS", "Action, Adventure, Fantasy"),
 
-            Movie("Tenet", "some movie3", R.drawable.tenet, "13+", 4F, "100 MIN", true, "98 REVIEWS"),
-            Movie("Avengers: End Game", "some movie1", R.drawable.avengers_end_game, "13+", 4F, "137 MIN", false, "125 REVIEWS"),
-            Movie("Tenet", "some movie2", R.drawable.tenet, "16+", 5F, "97 MIN", true, "98 REVIEWS"),
-            Movie("Black Widow", "some movie3", R.drawable.black_widow, "13+", 4F, "102 MIN", false, "38 REVIEWS"),
-            Movie("Wonder Woman 1984", "some movie3", R.drawable.wonder_woman, "13+", 5F, "120 MIN", false, "74 REVIEWS"),
-            Movie("Tenet", "some movie3", R.drawable.tenet, "13+", 4F, "100 MIN", true, "98 REVIEWS"),
+            Movie("Avengers: End Game", "some movie1", R.drawable.avengers_end_game, "13+", 4F, "137 MIN", false, "125 REVIEWS", "Action, Adventure, Drama"),
+            Movie("Tenet", "some movie2", R.drawable.tenet, "16+", 5F, "97 MIN", true, "98 REVIEWS", "Action, Sci-Fi, Thriller "),
+            Movie("Black Widow", "some movie3", R.drawable.black_widow, "13+", 4F, "102 MIN", false, "38 REVIEWS", "Action, Adventure, Sci-Fi"),
+            Movie("Wonder Woman 1984", "some movie3", R.drawable.wonder_woman, "13+", 5F, "120 MIN", false, "74 REVIEWS", "Action, Adventure, Fantasy"),
+
+            Movie("Avengers: End Game", "some movie1", R.drawable.avengers_end_game, "13+", 4F, "137 MIN", false, "125 REVIEWS", "Action, Adventure, Drama"),
+            Movie("Tenet", "some movie2", R.drawable.tenet, "16+", 5F, "97 MIN", true, "98 REVIEWS", "Action, Sci-Fi, Thriller "),
+            Movie("Black Widow", "some movie3", R.drawable.black_widow, "13+", 4F, "102 MIN", false, "38 REVIEWS", "Action, Adventure, Sci-Fi"),
+            Movie("Wonder Woman 1984", "some movie3", R.drawable.wonder_woman, "13+", 5F, "120 MIN", false, "74 REVIEWS", "Action, Adventure, Fantasy"),
+
         )
     }
 }

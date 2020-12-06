@@ -9,4 +9,5 @@ data class Movie (
     val duration: String,
     val like: Boolean,
     val reviews: String,
+    val genre: String,
     )

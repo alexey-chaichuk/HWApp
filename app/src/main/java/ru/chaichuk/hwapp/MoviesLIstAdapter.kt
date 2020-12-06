@@ -71,6 +71,7 @@ private class DataViewHolder(itemView: View) : MoviesListViewHolder(itemView) {
     private val duration: TextView = itemView.findViewById(R.id.textViewListMovieDuration)
     private val reviews: TextView = itemView.findViewById(R.id.textViewListMovieReviews)
     private val like: ImageView = itemView.findViewById(R.id.imageViewLike)
+    private val genre: TextView = itemView.findViewById(R.id.textViewListMovie1Genre)
 
 
     fun onBind(movie: Movie) {
@@ -94,6 +95,7 @@ private class DataViewHolder(itemView: View) : MoviesListViewHolder(itemView) {
         age.text = movie.age
         duration.text = movie.duration
         reviews.text = movie.reviews
+        genre.text = movie.genre
     }
 }
 
