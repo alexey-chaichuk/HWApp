@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="6dp"
+    tools:context=".MoviesActivity">
+
+    <ImageView
+        android:id="@+id/imageViewListMovie1Bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/movies_list_bg" />
+
+    <ImageView
+        android:id="@+id/imageViewListMoviePoster"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="4dp"
+        android:contentDescription="@string/avengers_name_small"
+        app:layout_constraintEnd_toEndOf="@id/imageViewListMovie1Bg"
+        app:layout_constraintStart_toStartOf="@+id/imageViewListMovie1Bg"
+        app:layout_constraintTop_toTopOf="@+id/imageViewListMovie1Bg"
+        app:srcCompat="@drawable/movies_list_movie1" />
+
+    <ImageView
+        android:id="@+id/imageViewListMovie1Gradient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewListMoviePoster"
+        app:layout_constraintEnd_toEndOf="@id/imageViewListMoviePoster"
+        app:layout_constraintStart_toStartOf="@+id/imageViewListMoviePoster"
+        app:layout_constraintTop_toTopOf="@+id/imageViewListMoviePoster"
+        app:srcCompat="@drawable/movies_list_gradient" />
+
+    <RatingBar
+        android:id="@+id/ratingBarListMovie"
+        style="@style/myMoviesListRatingBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:numStars="5"
+        android:rating="4"
+        android:scaleX=".6"
+        android:scaleY=".6"
+        android:theme="@style/mySmallRatingBarTheme"
+        android:transformPivotX="0dp"
+        android:transformPivotY="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewListMoviePoster"
+        app:layout_constraintStart_toStartOf="@+id/imageViewListMoviePoster" />
+
+    <TextView
+        android:id="@+id/textViewListMovie1Genre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:text="@string/action_adventure_drama"
+        android:textColor="@color/text_red"
+        android:textSize="8sp"
+        app:layout_constraintBottom_toTopOf="@+id/ratingBarListMovie"
+        app:layout_constraintStart_toStartOf="@+id/imageViewListMoviePoster" />
+
+    <TextView
+        android:id="@+id/textViewListMovieReviews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="62dp"
+        android:layout_marginTop="1dp"
+        android:alpha="0.5"
+        android:text="@string/_125_reviews"
+        android:textColor="@color/white"
+        android:textSize="8sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/imageViewListMoviePoster"
+        app:layout_constraintTop_toTopOf="@+id/ratingBarListMovie" />
+
+    <TextView
+        android:id="@+id/textViewListMovieTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/avengers_name_small"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/imageViewListMovie1Bg"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewListMoviePoster" />
+
+    <TextView
+        android:id="@+id/textViewListMovieDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="1dp"
+        android:alpha="0.5"
+        android:text="@string/_137_min"
+        android:textColor="@color/white"
+        android:textSize="8sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/imageViewListMovie1Bg"
+        app:layout_constraintTop_toBottomOf="@+id/textViewListMovieTitle" />
+
+    <ImageView
+        android:id="@+id/imageViewListAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintStart_toStartOf="@id/imageViewListMoviePoster"
+        app:layout_constraintTop_toTopOf="@+id/imageViewListMoviePoster"
+        app:srcCompat="@drawable/rectangle_age" />
+
+    <TextView
+        android:id="@+id/textViewListAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        android:text="@string/age_limit_13"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewListAge"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewListAge"
+        app:layout_constraintStart_toStartOf="@+id/imageViewListAge"
+        app:layout_constraintTop_toTopOf="@+id/imageViewListAge" />
+
+    <ImageView
+        android:id="@+id/imageViewLike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="6dp"
+        app:layout_constraintEnd_toEndOf="@id/imageViewListMoviePoster"
+        app:layout_constraintTop_toTopOf="@+id/imageViewListMoviePoster"
+        app:srcCompat="@drawable/like_icon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
