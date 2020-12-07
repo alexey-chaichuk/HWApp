@@ -37,66 +37,6 @@
             app:layout_constraintTop_toTopOf="@+id/imageViewAvengersMovieBg"
             app:srcCompat="@drawable/rect_gradient" />
 
-        <ImageView
-            android:id="@+id/imageViewRDowneyJr"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/robert_downey_jr"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toStartOf="@+id/imageViewCEvans"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCastTitle"
-            app:srcCompat="@drawable/robert_downey_jr" />
-
-        <ImageView
-            android:id="@+id/imageViewCEvans"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/chris_evans"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toStartOf="@+id/imageViewMRuffalo"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageViewRDowneyJr"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCastTitle"
-            app:srcCompat="@drawable/chris_evans" />
-
-        <ImageView
-            android:id="@+id/imageViewMRuffalo"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/mark_ruffalo"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toStartOf="@+id/imageViewCHemsworth"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageViewCEvans"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCastTitle"
-            app:srcCompat="@drawable/mark_ruffalo" />
-
-        <ImageView
-            android:id="@+id/imageViewCHemsworth"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:contentDescription="@string/chris_hemsworth"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageViewMRuffalo"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCastTitle"
-            app:srcCompat="@drawable/chris_hemsworth" />
-
         <RatingBar
             android:id="@+id/ratingBarMovie"
             style="@style/mySmallRatingBarStyle"
@@ -220,53 +160,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewStorylineText" />
 
-        <TextView
-            android:id="@+id/textViewCastRDowneyJr"
-            android:layout_width="0dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_actors"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/robert_downey_jr"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/imageViewRDowneyJr"
-            app:layout_constraintStart_toStartOf="@+id/imageViewRDowneyJr"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewRDowneyJr" />
-
-        <TextView
-            android:id="@+id/textViewCastCEvans"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/chris_evans"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/imageViewCEvans"
-            app:layout_constraintStart_toStartOf="@+id/imageViewCEvans"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewCEvans" />
-
-        <TextView
-            android:id="@+id/textViewCastMRuffalo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/mark_ruffalo"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/imageViewMRuffalo"
-            app:layout_constraintStart_toStartOf="@+id/imageViewMRuffalo"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewMRuffalo" />
-
-        <TextView
-            android:id="@+id/textViewCastCHemsworth"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/chris_hemsworth"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/imageViewCHemsworth"
-            app:layout_constraintStart_toStartOf="@+id/imageViewCHemsworth"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewCHemsworth" />
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCastTitle"
+            tools:listitem="@layout/view_holder_actor" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
