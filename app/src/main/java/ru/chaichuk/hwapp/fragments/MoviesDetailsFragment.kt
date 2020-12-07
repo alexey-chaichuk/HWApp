@@ -25,7 +25,6 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
 
     override fun onDetach() {
         listener = null
-        rv_actors = null
         super.onDetach()
     }
 
@@ -37,6 +36,11 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
         }
         rv_actors = view.findViewById(R.id.rv_actors)
         rv_actors?.adapter = ActorsListAdapter()
+    }
+
+    override fun onDestroyView() {
+        rv_actors = null
+        super.onDestroyView()
     }
 
     override fun onStart() {

@@ -26,7 +26,6 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
     }
 
     override fun onDetach() {
-        rv_movies_list = null
         listener = null
         super.onDetach()
     }
@@ -35,6 +34,11 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
         super.onViewCreated(view, savedInstanceState)
         rv_movies_list = view.findViewById(R.id.rv_movies_list)
         rv_movies_list?.adapter = MoviesListAdapter(clickListener)
+    }
+
+    override fun onDestroyView() {
+        rv_movies_list = null
+        super.onDestroyView()
     }
 
     override fun onStart() {

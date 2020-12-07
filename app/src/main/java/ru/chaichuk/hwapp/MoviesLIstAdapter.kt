@@ -12,40 +12,25 @@ import ru.chaichuk.hwapp.data.models.Movie
 
 
 class MoviesListAdapter(private val clickListener: OnRecyclerItemClicked) :
-    RecyclerView.Adapter<MoviesListViewHolder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var movies = listOf<Movie>()
 
-    override fun getItemViewType(position: Int): Int {
-        return when (movies.size) {
-            0 -> VIEW_TYPE_EMPTY
-            else -> VIEW_TYPE_MOVIES
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesListViewHolder {
-        return when (viewType) {
-            VIEW_TYPE_EMPTY -> EmptyViewHolder(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.view_holder_movie_empty, parent, false)
-            )
-            else -> DataViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return MoviesDataViewHolder(
                 LayoutInflater.from(
                     parent.context
                 ).inflate(R.layout.view_holder_movie, parent, false)
             )
-        }
     }
 
-    override fun onBindViewHolder(holder: MoviesListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is DataViewHolder -> {
+            is MoviesDataViewHolder -> {
                 holder.onBind(movies[position])
                 holder.itemView.setOnClickListener {
                     clickListener.onClick(movies[position])
                 }
-            }
-            is EmptyViewHolder -> { /* nothing to bind */
             }
         }
     }
@@ -59,10 +44,7 @@ class MoviesListAdapter(private val clickListener: OnRecyclerItemClicked) :
 
 }
 
-abstract class MoviesListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-
-private class EmptyViewHolder(itemView: View) : MoviesListViewHolder(itemView)
-private class DataViewHolder(itemView: View) : MoviesListViewHolder(itemView) {
+private class MoviesDataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val poster: ImageView = itemView.findViewById(R.id.imageViewListMoviePoster)
     private val title: TextView = itemView.findViewById(R.id.textViewListMovieTitle)
@@ -101,9 +83,6 @@ private class DataViewHolder(itemView: View) : MoviesListViewHolder(itemView) {
 
 private val RecyclerView.ViewHolder.context
     get() = this.itemView.context
-
-private const val VIEW_TYPE_EMPTY = 0
-private const val VIEW_TYPE_MOVIES = 1
 
 interface OnRecyclerItemClicked {
     fun onClick(movie: Movie)

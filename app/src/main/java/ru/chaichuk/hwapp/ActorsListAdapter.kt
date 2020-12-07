@@ -9,31 +9,18 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import ru.chaichuk.hwapp.data.models.Actor
 
-class ActorsListAdapter() : RecyclerView.Adapter<ActorsViewHolder>() {
+class ActorsListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var actors = listOf<Actor>()
 
-    override fun getItemViewType(position: Int): Int {
-        return when (actors.size) {
-            0 -> VIEW_TYPE_EMPTY
-            else -> VIEW_TYPE_ACTORS
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder {
-        return when (viewType) {
-            VIEW_TYPE_EMPTY -> ActorsEmptyViewHolder(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.view_holder_movie_empty, parent, false)
-            )
-            else -> ActorsDataViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return ActorsDataViewHolder(
                 LayoutInflater.from(
                     parent.context
                 ).inflate(R.layout.view_holder_actor, parent, false)
             )
-        }
     }
 
-    override fun onBindViewHolder(holder: ActorsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
             is ActorsDataViewHolder -> {
                 holder.onBind(actors[position])
@@ -49,10 +36,7 @@ class ActorsListAdapter() : RecyclerView.Adapter<ActorsViewHolder>() {
     }
 }
 
-abstract class ActorsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
-
-private class ActorsEmptyViewHolder(itemView: View) : ActorsViewHolder(itemView)
-private class ActorsDataViewHolder(itemView: View) : ActorsViewHolder(itemView) {
+private class ActorsDataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     private val avatar: ImageView = itemView.findViewById(R.id.imageViewActorAvatar)
     private val name: TextView = itemView.findViewById(R.id.textViewActorName)
 
@@ -74,6 +58,3 @@ private class ActorsDataViewHolder(itemView: View) : ActorsViewHolder(itemView) 
 
 private val RecyclerView.ViewHolder.context
     get() = this.itemView.context
-
-private const val VIEW_TYPE_EMPTY = 0
-private const val VIEW_TYPE_ACTORS = 1
