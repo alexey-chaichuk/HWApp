@@ -18,16 +18,15 @@
 
     <ImageView
         android:id="@+id/imageViewListMoviePoster"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="166dp"
+        android:layout_height="246dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="4dp"
-        android:contentDescription="@string/avengers_name_small"
+        app:layout_constraintTop_toTopOf="@+id/imageViewListMovie1Bg"
         app:layout_constraintEnd_toEndOf="@id/imageViewListMovie1Bg"
         app:layout_constraintStart_toStartOf="@+id/imageViewListMovie1Bg"
-        app:layout_constraintTop_toTopOf="@+id/imageViewListMovie1Bg"
-        app:srcCompat="@drawable/movies_list_movie1" />
+        tools:srcCompat="@drawable/movies_list_movie1" />
 
     <ImageView
         android:id="@+id/imageViewListMovie1Gradient"
@@ -60,10 +59,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
-        android:text="@string/action_adventure_drama"
+        tools:text="@string/action_adventure_drama"
         android:textColor="@color/text_red"
         android:textSize="8sp"
         app:layout_constraintBottom_toTopOf="@+id/ratingBarListMovie"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewListMoviePoster"
         app:layout_constraintStart_toStartOf="@+id/imageViewListMoviePoster" />
 
     <TextView
@@ -73,7 +73,7 @@
         android:layout_marginStart="62dp"
         android:layout_marginTop="1dp"
         android:alpha="0.5"
-        android:text="@string/_125_reviews"
+        tools:text="@string/_125_reviews"
         android:textColor="@color/white"
         android:textSize="8sp"
         android:textStyle="bold"
@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/avengers_name_small"
+        tools:text="@string/avengers_name_small"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -100,7 +100,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="1dp"
         android:alpha="0.5"
-        android:text="@string/_137_min"
+        tools:text="@string/_137_min"
         android:textColor="@color/white"
         android:textSize="8sp"
         android:textStyle="bold"
@@ -124,7 +124,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:gravity="center"
-        android:text="@string/age_limit_13"
+        tools:text="@string/age_limit_13"
         android:textColor="@color/white"
         android:textSize="12sp"
         android:textStyle="bold"

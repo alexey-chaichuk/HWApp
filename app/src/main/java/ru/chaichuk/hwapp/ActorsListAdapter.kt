@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
-import ru.chaichuk.hwapp.data.models.Actor
+import com.bumptech.glide.Glide
+import ru.chaichuk.hwapp.data.Actor
 
 class ActorsListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var actors = listOf<Actor>()
@@ -41,17 +41,9 @@ private class ActorsDataViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
     private val name: TextView = itemView.findViewById(R.id.textViewActorName)
 
     fun onBind(actor: Actor) {
-
         context?.let {
-            avatar.setImageDrawable(
-                ResourcesCompat.getDrawable(
-                    it.resources,
-                    actor.avatar,
-                    it.theme
-                )
-            )
+            Glide.with(it).load(actor.picture).into(avatar)
         }
-
         name.text = actor.name
     }
 }

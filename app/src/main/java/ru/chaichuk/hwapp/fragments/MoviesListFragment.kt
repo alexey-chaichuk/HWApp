@@ -3,20 +3,22 @@ package ru.chaichuk.hwapp.fragments
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ru.chaichuk.hwapp.MoviesListAdapter
 import ru.chaichuk.hwapp.OnRecyclerItemClicked
 import ru.chaichuk.hwapp.R
-import ru.chaichuk.hwapp.data.models.Movie
-import ru.chaichuk.hwapp.domain.MoviesDataSource
+import ru.chaichuk.hwapp.data.Movie
+import ru.chaichuk.hwapp.data.loadMovies
 
 class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
 
     var listener:OnMoviesListClickListener? = null
     private var rv_movies_list: RecyclerView? = null
+    private var movies: List<Movie>? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -34,6 +36,11 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
         super.onViewCreated(view, savedInstanceState)
         rv_movies_list = view.findViewById(R.id.rv_movies_list)
         rv_movies_list?.adapter = MoviesListAdapter(clickListener)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            movies = loadMovies(view.context)
+            updateData()
+        }
     }
 
     override fun onDestroyView() {
@@ -48,20 +55,13 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
 
     private fun updateData() {
         (rv_movies_list?.adapter as? MoviesListAdapter)?.apply {
-            bindMovies(MoviesDataSource().getMovies())
+            bindMovies(movies)
         }
     }
 
 
     private fun doOnClick(movie: Movie) {
-        rv_movies_list?.let { rv ->
-            Snackbar.make(
-                rv,
-                movie.title,
-                Snackbar.LENGTH_SHORT)
-                .show()
-        }
-        listener?.onMovieClick()
+        listener?.onMovieClick(movie)
     }
 
     private val clickListener = object : OnRecyclerItemClicked {

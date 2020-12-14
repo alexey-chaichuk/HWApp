@@ -15,26 +15,25 @@
 
 
         <ImageView
-            android:id="@+id/imageViewAvengersMovieBg"
+            android:id="@+id/imageViewMovieBackdrop"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/avengers"
+            android:layout_height="298dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/avengers_bg" />
+            tools:srcCompat="@drawable/avengers_bg" />
 
         <ImageView
-            android:id="@+id/imageViewAvengersMovieGradient"
+            android:id="@+id/imageViewMovieBackdropGradient"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:contentDescription="@string/avengers"
             android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="@+id/imageViewAvengersMovieBg"
-            app:layout_constraintEnd_toEndOf="@+id/imageViewAvengersMovieBg"
-            app:layout_constraintStart_toStartOf="@+id/imageViewAvengersMovieBg"
-            app:layout_constraintTop_toTopOf="@+id/imageViewAvengersMovieBg"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewMovieBackdrop"
+            app:layout_constraintEnd_toEndOf="@+id/imageViewMovieBackdrop"
+            app:layout_constraintStart_toStartOf="@+id/imageViewMovieBackdrop"
+            app:layout_constraintTop_toTopOf="@+id/imageViewMovieBackdrop"
             app:srcCompat="@drawable/rect_gradient" />
 
         <RatingBar
@@ -63,7 +62,7 @@
             android:textStyle="bold"
             android:drawablePadding="4dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageViewAvengersMovieBg"
+            app:layout_constraintTop_toTopOf="@+id/imageViewMovieBackdrop"
             app:drawableLeftCompat="@drawable/chevron_left_white" />
 
         <TextView
@@ -77,7 +76,7 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageViewAvengersMovieBg" />
+            app:layout_constraintTop_toTopOf="@+id/imageViewMovieBackdrop" />
 
         <TextView
             android:id="@+id/textViewTitle"
@@ -92,7 +91,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageViewAvengersMovieBg" />
+            app:layout_constraintTop_toTopOf="@+id/imageViewMovieBackdrop" />
 
         <TextView
             android:id="@+id/textViewGenre"

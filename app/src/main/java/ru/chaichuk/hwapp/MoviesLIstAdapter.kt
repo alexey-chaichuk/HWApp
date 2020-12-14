@@ -8,7 +8,8 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
-import ru.chaichuk.hwapp.data.models.Movie
+import com.bumptech.glide.Glide
+import ru.chaichuk.hwapp.data.Movie
 
 
 class MoviesListAdapter(private val clickListener: OnRecyclerItemClicked) :
@@ -37,8 +38,12 @@ class MoviesListAdapter(private val clickListener: OnRecyclerItemClicked) :
 
     override fun getItemCount(): Int = movies.size
 
-    fun bindMovies(newMovies: List<Movie>) {
-        movies = newMovies
+    fun bindMovies(movies: List<Movie>?) {
+        movies.also {
+            if (it != null) {
+                this.movies = it
+            }
+        }
         notifyDataSetChanged()
     }
 
@@ -58,26 +63,27 @@ private class MoviesDataViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
 
     fun onBind(movie: Movie) {
         context?.let {
-            poster.setImageDrawable(ResourcesCompat.getDrawable(it.resources,
-                movie.poster,
-                it.theme))
-
+            Glide.with(it).load(movie.poster).into(poster)
             if(movie.like) {
-                like.setImageDrawable(ResourcesCompat.getDrawable(it.resources,
+                like.setImageDrawable(
+                    ResourcesCompat.getDrawable(it.resources,
                     R.drawable.liked_icon,
-                    it.theme))
+                    it.theme)
+                )
             } else {
-                like.setImageDrawable(ResourcesCompat.getDrawable(it.resources,
+                like.setImageDrawable(
+                    ResourcesCompat.getDrawable(it.resources,
                     R.drawable.like_icon,
-                    it.theme))
+                    it.theme)
+                )
             }
         }
         title.text = movie.title
-        rating.rating = movie.rating
-        age.text = movie.age
-        duration.text = movie.duration
-        reviews.text = movie.reviews
-        genre.text = movie.genre
+        rating.rating = movie.ratings/2
+        age.text = StringBuilder().append(movie.minimumAge.toString()).append("+").toString()
+        duration.text = StringBuilder().append(movie.runtime.toString()).append(" MIN").toString()
+        reviews.text = StringBuilder().append(movie.numberOfRatings).append(" REVIEWS").toString()
+        genre.text = movie.genres.joinToString { it -> it.name }
     }
 }
 
