@@ -82,16 +82,21 @@
 
     <TextView
         android:id="@+id/textViewListMovieTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        tools:text="@string/avengers_name_small"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="20dp"
+        android:textAlignment="textStart"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewListMovie1Bg"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewListMovie1Bg"
         app:layout_constraintStart_toStartOf="@+id/imageViewListMovie1Bg"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewListMoviePoster" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewListMoviePoster"
+        tools:text="@string/avengers_name_small" />
 
     <TextView
         android:id="@+id/textViewListMovieDuration"

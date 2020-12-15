@@ -48,11 +48,6 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
         super.onDestroyView()
     }
 
-    override fun onStart() {
-        super.onStart()
-        updateData()
-    }
-
     private fun updateData() {
         (rv_movies_list?.adapter as? MoviesListAdapter)?.apply {
             bindMovies(movies)
