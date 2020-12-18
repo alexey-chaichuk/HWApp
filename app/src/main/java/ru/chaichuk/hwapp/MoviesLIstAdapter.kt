@@ -38,8 +38,8 @@ class MoviesListAdapter(private val clickListener: OnRecyclerItemClicked) :
 
     override fun getItemCount(): Int = movies.size
 
-    fun bindMovies(movies: List<Movie>) {
-        this.movies = movies
+    fun bindMovies(newMovies: List<Movie>) {
+        movies = newMovies
         notifyDataSetChanged()
     }
 
