@@ -50,7 +50,9 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
 
     private fun updateData() {
         (rv_movies_list?.adapter as? MoviesListAdapter)?.apply {
-            bindMovies(movies)
+            movies?.let {
+                bindMovies(it)
+            }
         }
     }
 
