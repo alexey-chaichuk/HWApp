@@ -12,6 +12,7 @@
         android:id="@+id/imageViewActorAvatar"
         android:layout_width="88dp"
         android:layout_height="88dp"
+        android:scaleType="centerCrop"
         tools:src="@tools:sample/avatars" />
 
     <TextView
