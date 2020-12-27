@@ -1,4 +1,4 @@
-package ru.chaichuk.hwapp;
+package ru.chaichuk.hwapp.listAdapters;
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import ru.chaichuk.hwapp.R
 import ru.chaichuk.hwapp.data.Movie
 
 
@@ -63,13 +64,13 @@ private class MoviesDataViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
             if(movie.like) {
                 like.setImageDrawable(
                     ResourcesCompat.getDrawable(it.resources,
-                    R.drawable.liked_icon,
+                        R.drawable.liked_icon,
                     it.theme)
                 )
             } else {
                 like.setImageDrawable(
                     ResourcesCompat.getDrawable(it.resources,
-                    R.drawable.like_icon,
+                        R.drawable.like_icon,
                     it.theme)
                 )
             }
