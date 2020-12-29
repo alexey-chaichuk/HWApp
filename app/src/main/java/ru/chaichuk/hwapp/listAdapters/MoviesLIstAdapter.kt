@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import ru.chaichuk.hwapp.R
 import ru.chaichuk.hwapp.data.Movie
 
@@ -60,7 +61,7 @@ private class MoviesDataViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
 
     fun onBind(movie: Movie) {
         context?.let {
-            Glide.with(it).load(movie.poster).into(poster)
+            Glide.with(it).load(movie.poster).transform(GranularRoundedCorners(10f, 10f, 0f, 0f)).into(poster)
             if(movie.like) {
                 like.setImageDrawable(
                     ResourcesCompat.getDrawable(it.resources,

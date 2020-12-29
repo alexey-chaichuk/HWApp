@@ -72,7 +72,7 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
     }
 
     private fun updateMovie(movie: Movie) {
-        Glide.with(requireContext()).load(movie.backdrop).into(iv_movie_backdrop)
+        iv_movie_backdrop?.let { Glide.with(requireContext()).load(movie.backdrop).into(it) }
         tv_movie_title?.text = movie.title
         rb_movie?.rating = movie.ratings / 2
         tv_genre?.text = movie.genres.joinToString { genre -> genre.name }
