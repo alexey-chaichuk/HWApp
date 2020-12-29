@@ -3,32 +3,40 @@ package ru.chaichuk.hwapp.fragments
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import ru.chaichuk.hwapp.MoviesListAdapter
-import ru.chaichuk.hwapp.OnRecyclerItemClicked
+import ru.chaichuk.hwapp.listAdapters.MoviesListAdapter
+import ru.chaichuk.hwapp.listAdapters.OnRecyclerItemClicked
 import ru.chaichuk.hwapp.R
 import ru.chaichuk.hwapp.data.Movie
-import ru.chaichuk.hwapp.data.loadMovies
+import ru.chaichuk.hwapp.data.MoviesListLoader
+import ru.chaichuk.hwapp.viewModels.MoviesListViewModel
+import ru.chaichuk.hwapp.viewModels.MoviesListViewModelFactory
 
 class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
 
+    private val viewModel: MoviesListViewModel by viewModels { MoviesListViewModelFactory() }
+
     var listener:OnMoviesListClickListener? = null
     private var rv_movies_list: RecyclerView? = null
-    private var movies: List<Movie>? = null
+    private var pb_loading_state: ProgressBar? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if(context is OnMoviesListClickListener) {
             listener = context
         }
+        if(context is MoviesListLoader) {
+            viewModel.moviesListLoader = context
+        }
     }
 
     override fun onDetach() {
         listener = null
+        viewModel.moviesListLoader = null
         super.onDetach()
     }
 
@@ -36,11 +44,11 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
         super.onViewCreated(view, savedInstanceState)
         rv_movies_list = view.findViewById(R.id.rv_movies_list)
         rv_movies_list?.adapter = MoviesListAdapter(clickListener)
+        pb_loading_state = view.findViewById(R.id.movies_list_loader)
 
-        CoroutineScope(Dispatchers.Main).launch {
-            movies = loadMovies(view.context)
-            updateData()
-        }
+        viewModel.loadMoviesList()
+        viewModel.moviesList.observe(this.viewLifecycleOwner, this::updateMoviesList)
+        viewModel.loadingState.observe(this.viewLifecycleOwner, this::updateLoadingState)
     }
 
     override fun onDestroyView() {
@@ -48,12 +56,14 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
         super.onDestroyView()
     }
 
-    private fun updateData() {
+    private fun updateMoviesList(movies : List<Movie>) {
         (rv_movies_list?.adapter as? MoviesListAdapter)?.apply {
-            movies?.let {
-                bindMovies(it)
-            }
+            bindMovies(movies)
         }
+    }
+
+    private fun updateLoadingState(loading : Boolean) {
+        pb_loading_state?.isVisible = loading
     }
 
 

@@ -7,15 +7,20 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import ru.chaichuk.hwapp.ActorsListAdapter
+import ru.chaichuk.hwapp.listAdapters.ActorsListAdapter
 import ru.chaichuk.hwapp.R
 import ru.chaichuk.hwapp.data.Movie
+import ru.chaichuk.hwapp.viewModels.MovieDetailsViewModel
+import ru.chaichuk.hwapp.viewModels.MovieDetailsViewModelFactory
 
 class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
 
-    private var listener:OnMoviesDetailsClickListener? = null
+    private val viewModel: MovieDetailsViewModel by viewModels { MovieDetailsViewModelFactory() }
+
+    private var listener: OnMoviesDetailsClickListener? = null
 
     private var rv_actors: RecyclerView? = null
     private var iv_movie_backdrop: ImageView? = null
@@ -27,11 +32,9 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
     private var tv_age: TextView? = null
     private var tv_cast: TextView? = null
 
-    private var movie: Movie? = null
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(context is OnMoviesDetailsClickListener) {
+        if (context is OnMoviesDetailsClickListener) {
             listener = context
         }
     }
@@ -59,20 +62,8 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
         tv_age = view.findViewById(R.id.textViewAge)
         tv_cast = view.findViewById(R.id.textViewCastTitle)
 
-        movie = arguments?.getParcelable<Movie>("movie")
-        movie?.let {
-            Glide.with(view.context).load(it.backdrop).into(iv_movie_backdrop)
-            tv_movie_title?.text = it.title
-            rb_movie?.rating = it.ratings/2
-            tv_genre?.text = it.genres.joinToString { genre -> genre.name }
-            tv_storyline?.text = it.overview
-            tv_reviews?.text = StringBuilder().append(it.numberOfRatings).append(" REVIEWS").toString()
-            tv_age?.text = StringBuilder().append(it.minimumAge.toString()).append("+").toString()
-            if(it.actors.isEmpty()) {
-                tv_cast?.visibility = View.GONE
-                rv_actors?.visibility = View.GONE
-            }
-        }
+        viewModel.movie.observe(this.viewLifecycleOwner, this::updateMovie)
+        arguments?.getParcelable<Movie>("movie")?.let { viewModel.loadMovie(it) }
     }
 
     override fun onDestroyView() {
@@ -80,14 +71,22 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
         super.onDestroyView()
     }
 
-    override fun onStart() {
-        super.onStart()
-        updateData()
-    }
-
-    private fun updateData() {
-        (rv_actors?.adapter as? ActorsListAdapter)?.apply {
-            movie?.actors?.let { bindActors(it) }
+    private fun updateMovie(movie: Movie) {
+        iv_movie_backdrop?.let { Glide.with(requireContext()).load(movie.backdrop).into(it) }
+        tv_movie_title?.text = movie.title
+        rb_movie?.rating = movie.ratings / 2
+        tv_genre?.text = movie.genres.joinToString { genre -> genre.name }
+        tv_storyline?.text = movie.overview
+        tv_reviews?.text =
+            StringBuilder().append(movie.numberOfRatings).append(" REVIEWS").toString()
+        tv_age?.text = StringBuilder().append(movie.minimumAge.toString()).append("+").toString()
+        if (movie.actors.isEmpty()) {
+            tv_cast?.visibility = View.GONE
+            rv_actors?.visibility = View.GONE
+        } else {
+            (rv_actors?.adapter as? ActorsListAdapter)?.apply {
+                bindActors(movie.actors)
+            }
         }
     }
 }

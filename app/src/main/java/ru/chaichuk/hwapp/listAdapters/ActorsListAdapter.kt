@@ -1,4 +1,4 @@
-package ru.chaichuk.hwapp
+package ru.chaichuk.hwapp.listAdapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import ru.chaichuk.hwapp.R
 import ru.chaichuk.hwapp.data.Actor
 
 class ActorsListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
