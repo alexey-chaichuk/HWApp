@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import ru.chaichuk.hwapp.R
 import ru.chaichuk.hwapp.data.Actor
 
@@ -42,8 +42,8 @@ private class ActorsDataViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
     private val name: TextView = itemView.findViewById(R.id.textViewActorName)
 
     fun onBind(actor: Actor) {
-        context?.let {
-            Glide.with(it).load(actor.picture).into(avatar)
+        avatar.load(actor.picture) {
+            crossfade(true)
         }
         name.text = actor.name
     }
