@@ -53,7 +53,7 @@ class MovieDbApi {
         @Suppress("EXPERIMENTAL_API_USAGE")
         private val retrofit: Retrofit = Retrofit.Builder()
             .client(client)
-            .baseUrl("https://api.themoviedb.org/3/")
+            .baseUrl(HWApp.baseUrl)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
 

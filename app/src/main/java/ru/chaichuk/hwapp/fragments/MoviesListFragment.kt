@@ -29,14 +29,10 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
         if(context is OnMoviesListClickListener) {
             listener = context
         }
-        if(context is MoviesListLoader) {
-            viewModel.moviesListLoader = context
-        }
     }
 
     override fun onDetach() {
         listener = null
-        viewModel.moviesListLoader = null
         super.onDetach()
     }
 
