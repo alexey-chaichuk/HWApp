@@ -18,27 +18,27 @@ import ru.chaichuk.hwapp.api_v3.dto.MoviesListPageDTO
 class MovieDbApi {
 
     suspend fun getPopularMovies() : List <MovieDTO> {
-        val moviesPage = RetrofitModule.moviesApi.popularMovies(HWApp.apiKey)
+        val moviesPage = RetrofitModule.moviesApi.popularMovies()
         return moviesPage.movies
     }
 
-    suspend fun getMovieDetails(movie_id : Int) : MovieDetailsDTO {
-        return RetrofitModule.moviesApi.movieDetails(movie_id, HWApp.apiKey)
+    suspend fun getMovieDetails(movieId : Int) : MovieDetailsDTO {
+        return RetrofitModule.moviesApi.movieDetails(movieId)
     }
 
-    suspend fun getMovieCredits(movie_id : Int) : CreditsDTO {
-        return RetrofitModule.moviesApi.movieCredits(movie_id, HWApp.apiKey)
+    suspend fun getMovieCredits(movieId : Int) : CreditsDTO {
+        return RetrofitModule.moviesApi.movieCredits(movieId)
     }
 
     private interface MoviesApi {
         @GET("movie/popular")
-        suspend fun popularMovies(@Query("api_key") apiKey : String) : MoviesListPageDTO
+        suspend fun popularMovies(@Query("api_key") apiKey : String = HWApp.apiKey) : MoviesListPageDTO
 
         @GET("movie/{movie_id}")
-        suspend fun movieDetails(@Path("movie_id") movie_id : Int, @Query("api_key") apiKey : String) : MovieDetailsDTO
+        suspend fun movieDetails(@Path("movie_id") movieId : Int, @Query("api_key") apiKey : String = HWApp.apiKey) : MovieDetailsDTO
 
         @GET("movie/{movie_id}/credits")
-        suspend fun movieCredits(@Path("movie_id") movie_id : Int, @Query("api_key") apiKey : String) : CreditsDTO
+        suspend fun movieCredits(@Path("movie_id") movieId : Int, @Query("api_key") apiKey : String = HWApp.apiKey) : CreditsDTO
     }
 
     private object RetrofitModule {

@@ -60,24 +60,20 @@ private class MoviesDataViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
 
 
     fun onBind(movie: Movie) {
-        context?.let {
-            poster.load(movie.poster) {
-                crossfade(true)
-                transformations(RoundedCornersTransformation(10f,10f,0f,0f))
-            }
-            if(movie.like) {
-                like.setImageDrawable(
-                    ResourcesCompat.getDrawable(it.resources,
-                        R.drawable.liked_icon,
-                    it.theme)
-                )
-            } else {
-                like.setImageDrawable(
-                    ResourcesCompat.getDrawable(it.resources,
-                        R.drawable.like_icon,
-                    it.theme)
-                )
-            }
+        poster.load(movie.poster) {
+            crossfade(true)
+            transformations(RoundedCornersTransformation(10f,10f,0f,0f))
+        }
+        if(movie.like) {
+            like.setImageDrawable(
+                ResourcesCompat.getDrawable(context.resources,
+                    R.drawable.liked_icon, context.theme)
+            )
+        } else {
+            like.setImageDrawable(
+                ResourcesCompat.getDrawable(context.resources,
+                    R.drawable.like_icon, context.theme)
+            )
         }
         title.text = movie.title
         rating.rating = movie.ratings/2

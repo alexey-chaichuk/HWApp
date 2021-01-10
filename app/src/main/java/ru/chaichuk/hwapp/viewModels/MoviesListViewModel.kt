@@ -23,7 +23,7 @@ class MoviesListViewModel : ViewModel(){
     val loadingState: LiveData<Boolean> get() = _mutableLoadingState
 
     fun loadMoviesList() {
-        if(movies.isEmpty()) {
+        if(_mutableMoviesList.value?.isEmpty() == true) {
 
             viewModelScope.launch {
 
