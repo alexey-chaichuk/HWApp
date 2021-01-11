@@ -1,9 +1,12 @@
 package ru.chaichuk.hwapp.api_v3.dto
 
-import kotlinx.serialization.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class MovieDetailsDTO (
+
+    @SerialName("adult")
     val adult: Boolean,
 
     @SerialName("backdrop_path")
@@ -12,9 +15,16 @@ data class MovieDetailsDTO (
     @SerialName("belongs_to_collection")
     val belongsToCollection: CollectionDTO? = null,
 
+    @SerialName("budget")
     val budget: Long,
+
+    @SerialName("genres")
     val genres: List<GenreDTO>,
+
+    @SerialName("homepage")
     val homepage: String,
+
+    @SerialName("id")
     val id: Long,
 
     @SerialName("imdb_id")
@@ -26,7 +36,10 @@ data class MovieDetailsDTO (
     @SerialName("original_title")
     val originalTitle: String,
 
+    @SerialName("overview")
     val overview: String,
+
+    @SerialName("popularity")
     val popularity: Double,
 
     @SerialName("poster_path")
@@ -41,15 +54,25 @@ data class MovieDetailsDTO (
     @SerialName("release_date")
     val releaseDate: String,
 
+    @SerialName("revenue")
     val revenue: Long,
+
+    @SerialName("runtime")
     val runtime: Long,
 
     @SerialName("spoken_languages")
     val spokenLanguages: List<SpokenLanguageDTO>,
 
+    @SerialName("status")
     val status: String,
+
+    @SerialName("tagline")
     val tagline: String,
+
+    @SerialName("title")
     val title: String,
+
+    @SerialName("video")
     val video: Boolean,
 
     @SerialName("vote_average")
@@ -57,51 +80,4 @@ data class MovieDetailsDTO (
 
     @SerialName("vote_count")
     val voteCount: Long
-)
-
-@Serializable
-data class CollectionDTO (
-    val id: Long,
-    val name: String,
-
-    @SerialName("poster_path")
-    val posterPath: String,
-
-    @SerialName("backdrop_path")
-    val backdropPath: String
-)
-
-@Serializable
-data class GenreDTO (
-    val id: Long,
-    val name: String
-)
-
-@Serializable
-data class ProductionCompanyDTO (
-    val id: Long,
-
-    @SerialName("logo_path")
-    val logoPath: String? = null,
-
-    val name: String,
-
-    @SerialName("origin_country")
-    val originCountry: String
-)
-
-@Serializable
-data class ProductionCountryDTO (
-    @SerialName("iso_3166_1")
-    val iso3166_1: String,
-
-    val name: String
-)
-
-@Serializable
-data class SpokenLanguageDTO (
-    @SerialName("iso_639_1")
-    val iso639_1: String,
-
-    val name: String
 )

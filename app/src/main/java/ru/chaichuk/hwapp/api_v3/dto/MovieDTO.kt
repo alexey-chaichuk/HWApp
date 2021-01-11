@@ -1,9 +1,11 @@
 package ru.chaichuk.hwapp.api_v3.dto
 
-import kotlinx.serialization.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class MovieDTO (
+
     @SerialName("poster_path")
     val posterPath: String,
 

@@ -4,15 +4,11 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CreditsDTO (
+data class GenreDTO (
 
     @SerialName("id")
     val id: Long,
 
-    @SerialName("cast")
-    val cast: List<CastDTO>,
-
-    @SerialName("crew")
-    val crew: List<CastDTO>
+    @SerialName("name")
+    val name: String
 )
-
