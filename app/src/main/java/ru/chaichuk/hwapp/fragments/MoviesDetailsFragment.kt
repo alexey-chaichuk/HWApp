@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import ru.chaichuk.hwapp.listAdapters.ActorsListAdapter
 import ru.chaichuk.hwapp.R
 import ru.chaichuk.hwapp.data.Movie
@@ -72,7 +72,7 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
     }
 
     private fun updateMovie(movie: Movie) {
-        iv_movie_backdrop?.let { Glide.with(requireContext()).load(movie.backdrop).into(it) }
+        iv_movie_backdrop?.load(movie.backdrop)
         tv_movie_title?.text = movie.title
         rb_movie?.rating = movie.ratings / 2
         tv_genre?.text = movie.genres.joinToString { genre -> genre.name }
