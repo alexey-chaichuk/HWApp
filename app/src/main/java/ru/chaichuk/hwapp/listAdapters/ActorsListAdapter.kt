@@ -1,5 +1,6 @@
 package ru.chaichuk.hwapp.listAdapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,9 @@ private class ActorsDataViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
     private val name: TextView = itemView.findViewById(R.id.textViewActorName)
 
     fun onBind(actor: Actor) {
+        Log.d("HWApp", actor.picture)
+        // next code crashes genymotion's emulator on linux (with or without crossfade)
+        // but works on google's emulator without problems
         avatar.load(actor.picture) {
             crossfade(true)
         }

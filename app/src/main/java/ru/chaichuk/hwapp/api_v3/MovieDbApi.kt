@@ -9,6 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import ru.chaichuk.hwapp.BuildConfig
 import ru.chaichuk.hwapp.HWApp
 import ru.chaichuk.hwapp.api_v3.dto.CreditsDTO
 import ru.chaichuk.hwapp.api_v3.dto.MovieDTO
@@ -32,13 +33,13 @@ class MovieDbApi {
 
     private interface MoviesApi {
         @GET("movie/popular")
-        suspend fun popularMovies(@Query("api_key") apiKey : String = HWApp.apiKey) : MoviesListPageDTO
+        suspend fun popularMovies(@Query("api_key") apiKey : String = BuildConfig.API_KEY) : MoviesListPageDTO
 
         @GET("movie/{movie_id}")
-        suspend fun movieDetails(@Path("movie_id") movieId : Int, @Query("api_key") apiKey : String = HWApp.apiKey) : MovieDetailsDTO
+        suspend fun movieDetails(@Path("movie_id") movieId : Int, @Query("api_key") apiKey : String = BuildConfig.API_KEY) : MovieDetailsDTO
 
         @GET("movie/{movie_id}/credits")
-        suspend fun movieCredits(@Path("movie_id") movieId : Int, @Query("api_key") apiKey : String = HWApp.apiKey) : CreditsDTO
+        suspend fun movieCredits(@Path("movie_id") movieId : Int, @Query("api_key") apiKey : String = BuildConfig.API_KEY) : CreditsDTO
     }
 
     private object RetrofitModule {
@@ -53,7 +54,7 @@ class MovieDbApi {
         @Suppress("EXPERIMENTAL_API_USAGE")
         private val retrofit: Retrofit = Retrofit.Builder()
             .client(client)
-            .baseUrl(HWApp.baseUrl)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
 

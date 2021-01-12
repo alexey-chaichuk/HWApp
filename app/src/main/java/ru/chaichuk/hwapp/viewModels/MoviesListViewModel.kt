@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import ru.chaichuk.hwapp.BuildConfig
 import ru.chaichuk.hwapp.api_v3.MovieDbApi
 import ru.chaichuk.hwapp.data.Actor
 import ru.chaichuk.hwapp.data.Genre
@@ -29,7 +30,6 @@ class MoviesListViewModel : ViewModel(){
 
                 _mutableLoadingState.setValue(true)
 
-                val pictureBasePath = "https://image.tmdb.org/t/p/w780"
                 val movieDbApi = MovieDbApi()
                 val moviesDTO = movieDbApi.getPopularMovies()
 
@@ -42,7 +42,7 @@ class MoviesListViewModel : ViewModel(){
                             Actor(
                                 it.id.toInt(),
                                 it.name,
-                                pictureBasePath + picture
+                                BuildConfig.BASE_IMAGE_W200_URL + picture
                             )
                         }
                     }
@@ -51,8 +51,8 @@ class MoviesListViewModel : ViewModel(){
                         movieDTO.id.toInt(),
                         movieDTO.title,
                         movieDTO.overview,
-                        pictureBasePath + movieDTO.posterPath,
-                        pictureBasePath + movieDTO.backdropPath,
+                        BuildConfig.BASE_IMAGE_W780_URL + movieDTO.posterPath,
+                        BuildConfig.BASE_IMAGE_W780_URL + movieDTO.backdropPath,
                         movieDTO.voteAverage.toFloat(),
                         movieDTO.voteCount.toInt(),
                         if(movieDTO.adult) 16 else 13,
