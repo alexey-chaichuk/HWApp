@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class CreditsDTO (
 
     @SerialName("id")
-    val id: Long,
+    val id: Long? = null,
 
     @SerialName("cast")
     val cast: List<CastDTO>,

@@ -34,10 +34,11 @@ class MoviesListViewModel : ViewModel(){
                 val moviesDTO = movieDbApi.getPopularMovies()
 
                 for (movieDTO in moviesDTO) {
-                    val movieDetailsDTO = movieDbApi.getMovieDetails(movieDTO.id.toInt())
-                    val movieCreditsDTO = movieDbApi.getMovieCredits(movieDTO.id.toInt())
-                    val genres : List<Genre> = movieDetailsDTO.genres.map { Genre(it.id.toInt(), it.name) }
-                    val actors : List<Actor> = movieCreditsDTO.cast.mapNotNull {
+                    //val movieDetailsDTO = movieDbApi.getMovieDetails(movieDTO.id.toInt())
+                    //val movieCreditsDTO = movieDbApi.getMovieCredits(movieDTO.id.toInt())
+                    val movieDetailsWithCreditsDTO = movieDbApi.getMovieDetailsWithCredits((movieDTO.id.toInt()))
+                    val genres : List<Genre> = movieDetailsWithCreditsDTO.genres.map { Genre(it.id.toInt(), it.name) }
+                    val actors : List<Actor> = movieDetailsWithCreditsDTO.credits.cast.mapNotNull {
                         it.profilePath?.let { picture ->
                             Actor(
                                 it.id.toInt(),
@@ -56,7 +57,7 @@ class MoviesListViewModel : ViewModel(){
                         movieDTO.voteAverage.toFloat(),
                         movieDTO.voteCount.toInt(),
                         if(movieDTO.adult) 16 else 13,
-                        movieDetailsDTO.runtime.toInt(),
+                        movieDetailsWithCreditsDTO.runtime.toInt(),
                         genres,
                         actors,
                         true

@@ -11,10 +11,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.chaichuk.hwapp.BuildConfig
 import ru.chaichuk.hwapp.HWApp
-import ru.chaichuk.hwapp.api_v3.dto.CreditsDTO
-import ru.chaichuk.hwapp.api_v3.dto.MovieDTO
-import ru.chaichuk.hwapp.api_v3.dto.MovieDetailsDTO
-import ru.chaichuk.hwapp.api_v3.dto.MoviesListPageDTO
+import ru.chaichuk.hwapp.api_v3.dto.*
 
 class MovieDbApi {
 
@@ -31,6 +28,10 @@ class MovieDbApi {
         return RetrofitModule.moviesApi.movieCredits(movieId)
     }
 
+    suspend fun getMovieDetailsWithCredits(movieId : Int) : MovieDetailsWithCreditsDTO {
+        return RetrofitModule.moviesApi.movieDetailsWithCredits(movieId)
+    }
+
     private interface MoviesApi {
         @GET("movie/popular")
         suspend fun popularMovies(@Query("api_key") apiKey : String = BuildConfig.API_KEY) : MoviesListPageDTO
@@ -40,6 +41,10 @@ class MovieDbApi {
 
         @GET("movie/{movie_id}/credits")
         suspend fun movieCredits(@Path("movie_id") movieId : Int, @Query("api_key") apiKey : String = BuildConfig.API_KEY) : CreditsDTO
+
+        @GET("movie/{movie_id}")
+        suspend fun movieDetailsWithCredits(@Path("movie_id") movieId : Int, @Query("api_key") apiKey : String = BuildConfig.API_KEY,
+            @Query("append_to_response") append : String = "credits") : MovieDetailsWithCreditsDTO
     }
 
     private object RetrofitModule {
