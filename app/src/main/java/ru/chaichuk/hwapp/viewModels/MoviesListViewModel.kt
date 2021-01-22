@@ -43,8 +43,6 @@ class MoviesListViewModel : ViewModel(){
                 val moviesDTO = movieDbApi.getPopularMovies()
 
                 for (movieDTO in moviesDTO) {
-                    //val movieDetailsDTO = movieDbApi.getMovieDetails(movieDTO.id.toInt())
-                    //val movieCreditsDTO = movieDbApi.getMovieCredits(movieDTO.id.toInt())
                     val movieDetailsWithCreditsDTO = movieDbApi.getMovieDetailsWithCredits((movieDTO.id.toInt()))
                     val genres : List<Genre> = movieDetailsWithCreditsDTO.genres.map { Genre(it.id.toInt(), it.name) }
                     val actors : List<Actor> = movieDetailsWithCreditsDTO.credits.cast.mapNotNull {

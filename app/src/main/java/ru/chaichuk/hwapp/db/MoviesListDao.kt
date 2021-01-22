@@ -1,6 +1,5 @@
 package ru.chaichuk.hwapp.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -15,12 +14,6 @@ interface MoviesListDao {
     @Query("DELETE FROM " + MoviesDbContract.Movies.TABLE_NAME)
     suspend fun deleteAll()
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(movie: Movie)
-
-    @Query("SELECT * FROM " + MoviesDbContract.Movies.TABLE_NAME + " ORDER BY _id ASC")
+    @Query("SELECT * FROM " + MoviesDbContract.Movies.TABLE_NAME + " ORDER BY " + MoviesDbContract.Movies.COLUMN_NAME_RATINGS + " DESC")
     suspend fun getAll(): List<Movie>
-
-    @Query("SELECT COUNT(_id) FROM " + MoviesDbContract.Movies.TABLE_NAME)
-    fun getLocationsCount(): Int
 }

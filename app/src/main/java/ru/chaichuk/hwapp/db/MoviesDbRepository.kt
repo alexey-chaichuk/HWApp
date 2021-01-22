@@ -17,5 +17,4 @@ class MoviesDbRepository (applicationContext : Context) {
         moviesDb.moviesListDao.deleteAll()
         moviesDb.moviesListDao.saveAll(movies)
     }
-
 }

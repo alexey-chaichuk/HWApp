@@ -46,9 +46,7 @@ private class ActorsDataViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
         Log.d("HWApp", actor.picture)
         // next code crashes genymotion's emulator on linux (with or without crossfade)
         // but works on google's emulator without problems
-        avatar.load(actor.picture) {
-            crossfade(true)
-        }
+        avatar.load(actor.picture) { crossfade(true) }
         name.text = actor.name
     }
 }

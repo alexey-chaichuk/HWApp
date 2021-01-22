@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import ru.chaichuk.hwapp.data.Actor
-import ru.chaichuk.hwapp.data.Genre
 import ru.chaichuk.hwapp.data.Movie
 
 @Database(entities = [Movie::class], version = 1)

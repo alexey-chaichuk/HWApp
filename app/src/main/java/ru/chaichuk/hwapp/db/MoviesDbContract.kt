@@ -1,11 +1,6 @@
 package ru.chaichuk.hwapp.db
 
 import android.provider.BaseColumns
-import androidx.room.ColumnInfo
-import androidx.room.Ignore
-import androidx.room.TypeConverters
-import ru.chaichuk.hwapp.data.Actor
-import ru.chaichuk.hwapp.data.Genre
 
 object MoviesDbContract {
 
@@ -13,6 +8,7 @@ object MoviesDbContract {
 
     object Movies {
         const val TABLE_NAME = "movies"
+
         const val COLUMN_NAME_ID = BaseColumns._ID
         const val COLUMN_NAME_TITLE = "title"
         const val COLUMN_NAME_OVERVIEW = "overview"
@@ -28,4 +24,3 @@ object MoviesDbContract {
     }
 
 }
-
