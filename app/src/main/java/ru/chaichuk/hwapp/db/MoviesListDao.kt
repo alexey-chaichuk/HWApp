@@ -10,7 +10,10 @@ import ru.chaichuk.hwapp.data.Movie
 @Dao
 interface MoviesListDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(movies: List<Movie>)
+    suspend fun saveAll(movies: List<Movie>)
+
+    @Query("DELETE FROM " + MoviesDbContract.Movies.TABLE_NAME)
+    suspend fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(movie: Movie)

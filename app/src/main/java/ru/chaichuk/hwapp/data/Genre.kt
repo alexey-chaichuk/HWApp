@@ -7,13 +7,8 @@ import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import ru.chaichuk.hwapp.db.MoviesDbContract
 
-@Entity
 @Parcelize
 data class Genre(
-    @PrimaryKey
-    @ColumnInfo(name = MoviesDbContract.Genres.COLUMN_NAME_ID)
     val id: Int,
-
-    @ColumnInfo(name = MoviesDbContract.Genres.COLUMN_NAME_NAME)
     val name: String
     ) :Parcelable
