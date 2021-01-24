@@ -23,4 +23,16 @@ object MoviesDbContract {
         const val COLUMN_NAME_LIKE = "like"
     }
 
+    object Genres {
+        const val TABLE_NAME = "genres"
+        const val COLUMN_NAME_ID = BaseColumns._ID
+        const val COLUMN_NAME_NAME = "name"
+    }
+
+    object Actors {
+        const val TABLE_NAME = "actors"
+        const val COLUMN_NAME_ID = BaseColumns._ID
+        const val COLUMN_NAME_NAME = "name"
+        const val COLUMN_NAME_PICTURE = "picture"
+    }
 }

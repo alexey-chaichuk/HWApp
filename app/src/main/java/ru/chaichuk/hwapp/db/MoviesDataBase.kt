@@ -4,12 +4,19 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import ru.chaichuk.hwapp.data.Movie
+import ru.chaichuk.hwapp.db.daos.ActorsDao
+import ru.chaichuk.hwapp.db.daos.GenresDao
+import ru.chaichuk.hwapp.db.daos.MoviesDao
+import ru.chaichuk.hwapp.db.entities.ActorEntity
+import ru.chaichuk.hwapp.db.entities.GenreEntity
+import ru.chaichuk.hwapp.db.entities.MovieEntity
 
-@Database(entities = [Movie::class], version = 1)
+@Database(entities = [MovieEntity::class, ActorEntity::class, GenreEntity::class], version = 2)
 abstract class MoviesDataBase : RoomDatabase() {
 
-    abstract val moviesListDao : MoviesListDao
+    abstract val moviesDao : MoviesDao
+    abstract val actorsDao : ActorsDao
+    abstract val genresDao : GenresDao
 
     companion object {
 

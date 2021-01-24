@@ -31,13 +31,14 @@ class MoviesListViewModel : ViewModel(){
 
             viewModelScope.launch {
 
-                _mutableLoadingState.setValue(true)
+                _mutableLoadingState.value = true
+
 
                 val moviesDbRepository = MoviesDbRepository(HWApp.appContext())
                 val moviesFromDb = moviesDbRepository.getAllMovies()
                 Log.d("HWApp", moviesFromDb.toString())
                 Log.d("HWApp", moviesFromDb.size.toString())
-                _mutableMoviesList.setValue(moviesFromDb)
+                _mutableMoviesList.value = moviesFromDb
 
                 val movieDbApi = MovieDbApi()
                 val moviesDTO = movieDbApi.getPopularMovies()
@@ -74,8 +75,8 @@ class MoviesListViewModel : ViewModel(){
 
                 moviesDbRepository.saveAllMovies(movies)
 
-                _mutableMoviesList.setValue(movies)
-                _mutableLoadingState.setValue(false)
+                _mutableMoviesList.value = movies
+                _mutableLoadingState.value = false
 
             }
         }
