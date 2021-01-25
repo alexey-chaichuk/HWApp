@@ -75,7 +75,7 @@ class MoviesListViewModel : ViewModel(){
 
                 moviesDbRepository.saveAllMovies(movies)
 
-                _mutableMoviesList.value = movies
+                _mutableMoviesList.value = movies.sortedBy { it.ratings }.asReversed()
                 _mutableLoadingState.value = false
 
             }
