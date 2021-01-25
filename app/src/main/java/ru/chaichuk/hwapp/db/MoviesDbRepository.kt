@@ -22,7 +22,7 @@ class MoviesDbRepository (applicationContext : Context) {
                 it.isNotEmpty()
             }.map {
                 moviesDb.genresDao.getById(it.toInt())
-            }. map {
+            }.map {
                 Genre(
                     id = it.id,
                     name = it.name
@@ -33,7 +33,7 @@ class MoviesDbRepository (applicationContext : Context) {
                 it.isNotEmpty()
             }.map {
                 moviesDb.actorsDao.getById(it.toInt())
-            }. map {
+            }.map {
                 Actor(
                     id = it.id,
                     name = it.name,
