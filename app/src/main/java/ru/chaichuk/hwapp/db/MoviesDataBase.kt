@@ -11,7 +11,7 @@ import ru.chaichuk.hwapp.db.entities.ActorEntity
 import ru.chaichuk.hwapp.db.entities.GenreEntity
 import ru.chaichuk.hwapp.db.entities.MovieEntity
 
-@Database(entities = [MovieEntity::class, ActorEntity::class, GenreEntity::class], version = 2)
+@Database(entities = [MovieEntity::class, ActorEntity::class, GenreEntity::class], version = 3)
 abstract class MoviesDataBase : RoomDatabase() {
 
     abstract val moviesDao : MoviesDao
