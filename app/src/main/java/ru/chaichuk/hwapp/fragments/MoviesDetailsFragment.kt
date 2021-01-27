@@ -73,7 +73,7 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
     }
 
     private fun updateMovie(movie: Movie) {
-        Log.d("HWApp", movie.backdrop ?: "null")
+        Log.d("HWApp", movie.backdrop)
         iv_movie_backdrop?.load(movie.backdrop)
         tv_movie_title?.text = movie.title
         rb_movie?.rating = movie.ratings / 2

@@ -1,16 +1,19 @@
 package ru.chaichuk.hwapp.viewModels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.chaichuk.hwapp.BuildConfig
+import ru.chaichuk.hwapp.HWApp
 import ru.chaichuk.hwapp.api_v3.MovieDbApi
 import ru.chaichuk.hwapp.data.Actor
 import ru.chaichuk.hwapp.data.Genre
 import ru.chaichuk.hwapp.data.Movie
 import ru.chaichuk.hwapp.data.MoviesListLoader
+import ru.chaichuk.hwapp.db.MoviesDbRepository
 
 class MoviesListViewModel : ViewModel(){
 
@@ -28,14 +31,19 @@ class MoviesListViewModel : ViewModel(){
 
             viewModelScope.launch {
 
-                _mutableLoadingState.setValue(true)
+                _mutableLoadingState.value = true
+
+
+                val moviesDbRepository = MoviesDbRepository(HWApp.appContext())
+                val moviesFromDb = moviesDbRepository.getAllMovies()
+                Log.d("HWApp", moviesFromDb.toString())
+                Log.d("HWApp", moviesFromDb.size.toString())
+                _mutableMoviesList.value = moviesFromDb
 
                 val movieDbApi = MovieDbApi()
                 val moviesDTO = movieDbApi.getPopularMovies()
 
                 for (movieDTO in moviesDTO) {
-                    //val movieDetailsDTO = movieDbApi.getMovieDetails(movieDTO.id.toInt())
-                    //val movieCreditsDTO = movieDbApi.getMovieCredits(movieDTO.id.toInt())
                     val movieDetailsWithCreditsDTO = movieDbApi.getMovieDetailsWithCredits((movieDTO.id.toInt()))
                     val genres : List<Genre> = movieDetailsWithCreditsDTO.genres.map { Genre(it.id.toInt(), it.name) }
                     val actors : List<Actor> = movieDetailsWithCreditsDTO.credits.cast.mapNotNull {
@@ -63,10 +71,13 @@ class MoviesListViewModel : ViewModel(){
                         true
                     )
                     movies.add(movie)
-
-                    _mutableMoviesList.setValue(movies)
-                    _mutableLoadingState.setValue(false)
                 }
+
+                moviesDbRepository.saveAllMovies(movies)
+
+                _mutableMoviesList.value = movies.sortedBy { it.ratings }.asReversed()
+                _mutableLoadingState.value = false
+
             }
         }
     }
