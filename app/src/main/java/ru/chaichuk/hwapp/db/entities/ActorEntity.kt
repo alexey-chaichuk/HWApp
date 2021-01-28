@@ -2,10 +2,12 @@ package ru.chaichuk.hwapp.db.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import ru.chaichuk.hwapp.db.MoviesDbContract
 
-@Entity(tableName = MoviesDbContract.Actors.TABLE_NAME)
+@Entity(tableName = MoviesDbContract.Actors.TABLE_NAME,
+        indices = [Index(MoviesDbContract.Actors.COLUMN_NAME_ID)])
 data class ActorEntity(
 
     @PrimaryKey
