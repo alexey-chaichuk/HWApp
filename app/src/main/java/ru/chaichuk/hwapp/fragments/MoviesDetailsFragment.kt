@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.request.CachePolicy
 import ru.chaichuk.hwapp.listAdapters.ActorsListAdapter
 import ru.chaichuk.hwapp.R
 import ru.chaichuk.hwapp.data.Movie
@@ -74,7 +75,10 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
 
     private fun updateMovie(movie: Movie) {
         Log.d("HWApp", movie.backdrop)
-        iv_movie_backdrop?.load(movie.backdrop)
+        iv_movie_backdrop?.load(movie.backdrop) {
+            crossfade(true)
+            diskCachePolicy(CachePolicy.ENABLED)
+        }
         tv_movie_title?.text = movie.title
         rb_movie?.rating = movie.ratings / 2
         tv_genre?.text = movie.genres.joinToString { genre -> genre.name }

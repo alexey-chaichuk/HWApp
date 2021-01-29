@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.request.CachePolicy
 import coil.transform.RoundedCornersTransformation
 import ru.chaichuk.hwapp.R
 import ru.chaichuk.hwapp.data.Movie
@@ -63,6 +64,7 @@ private class MoviesDataViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
         poster.load(movie.poster) {
             crossfade(true)
             transformations(RoundedCornersTransformation(10f,10f,0f,0f))
+            diskCachePolicy(CachePolicy.ENABLED)
         }
         if(movie.like) {
             like.setImageDrawable(

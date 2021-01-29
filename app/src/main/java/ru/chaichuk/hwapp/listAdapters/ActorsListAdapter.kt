@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.request.CachePolicy
 import ru.chaichuk.hwapp.R
 import ru.chaichuk.hwapp.data.Actor
 
@@ -46,7 +47,10 @@ private class ActorsDataViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
         Log.d("HWApp", actor.picture)
         // next code crashes genymotion's emulator on linux (with or without crossfade)
         // but works on google's emulator without problems
-        avatar.load(actor.picture) { crossfade(true) }
+        avatar.load(actor.picture) {
+            crossfade(true)
+            diskCachePolicy(CachePolicy.ENABLED)
+        }
         name.text = actor.name
     }
 }
