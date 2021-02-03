@@ -2,6 +2,8 @@ package ru.chaichuk.hwapp.db
 
 import android.content.Context
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import ru.chaichuk.hwapp.data.Actor
 import ru.chaichuk.hwapp.data.Genre
@@ -58,6 +60,46 @@ class MoviesDbRepository (applicationContext : Context) {
         }
 
         return@withContext moviesFromDb
+    }
+
+    suspend fun getAllMoviesAsFlow(): Flow<List<Movie>> = withContext(Dispatchers.IO) {
+
+        moviesDb.moviesDao.getAllAsFlow().map {
+            movieEntities -> movieEntities.map {
+            movieEntity -> Movie(
+                    id = movieEntity.id,
+                    title = movieEntity.title,
+                    overview = movieEntity.overview,
+                    poster = movieEntity.poster,
+                    backdrop = movieEntity.backdrop,
+                    ratings = movieEntity.ratings,
+                    numberOfRatings = movieEntity.numberOfRatings,
+                    minimumAge = movieEntity.minimumAge,
+                    runtime = movieEntity.runtime,
+                    genres = movieEntity.genreIds.split(",").filter {
+                        it.isNotEmpty()
+                    }.map {
+                        moviesDb.genresDao.getById(it.toInt())
+                    }.map {
+                        Genre(
+                            id = it.id,
+                            name = it.name
+                        )
+                    },
+                    actors = movieEntity.actorIds.split(",").filter {
+                        it.isNotEmpty()
+                    }.map {
+                        moviesDb.actorsDao.getById(it.toInt())
+                    }.map {
+                        Actor(
+                            id = it.id,
+                            name = it.name,
+                            picture = it.picture
+                        )
+                    },
+                    like = movieEntity.like)
+            }
+        }
     }
 
     suspend fun saveAllMovies(movies : List<Movie>) = withContext(Dispatchers.IO) {

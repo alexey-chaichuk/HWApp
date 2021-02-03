@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 import ru.chaichuk.hwapp.db.MoviesDbContract
 import ru.chaichuk.hwapp.db.entities.MovieEntity
 
@@ -20,4 +21,7 @@ interface MoviesDao {
 
     @Query("SELECT * FROM " + MoviesDbContract.Movies.TABLE_NAME + " ORDER BY " + MoviesDbContract.Movies.COLUMN_NAME_RATINGS + " DESC")
     suspend fun getAll(): List<MovieEntity>
+
+    @Query("SELECT * FROM " + MoviesDbContract.Movies.TABLE_NAME + " ORDER BY " + MoviesDbContract.Movies.COLUMN_NAME_RATINGS + " DESC")
+    fun getAllAsFlow(): Flow<List<MovieEntity>>
 }
