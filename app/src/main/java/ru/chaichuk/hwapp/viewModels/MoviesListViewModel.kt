@@ -43,7 +43,7 @@ class MoviesListViewModel : ViewModel() {
 
             Log.d("HWApp", "<--- starting data receiving from internet")
             val movieDbApi = MovieDbApi()
-            val moviesDTO = movieDbApi.getPopularMovies()
+            val moviesDTO = movieDbApi.getPopularMovies().log()
 
             for (movieDTO in moviesDTO) {
                 val movieDetailsWithCreditsDTO =

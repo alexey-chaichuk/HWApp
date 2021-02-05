@@ -1,6 +1,8 @@
 package ru.chaichuk.hwapp.api_v3
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -11,12 +13,13 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.chaichuk.hwapp.BuildConfig
 import ru.chaichuk.hwapp.api_v3.dto.*
+import ru.chaichuk.hwapp.utils.log
 
 class MovieDbApi {
 
-    suspend fun getPopularMovies() : List <MovieDTO> {
-        val moviesPage = RetrofitModule.moviesApi.popularMovies()
-        return moviesPage.movies
+    suspend fun getPopularMovies() : List <MovieDTO> = withContext(Dispatchers.IO) {
+        val moviesPage = RetrofitModule.moviesApi.popularMovies().log()
+        return@withContext moviesPage.movies
     }
 
     /*suspend fun getMovieDetails(movieId : Int) : MovieDetailsDTO {
@@ -27,8 +30,8 @@ class MovieDbApi {
         return RetrofitModule.moviesApi.movieCredits(movieId)
     }*/
 
-    suspend fun getMovieDetailsWithCredits(movieId : Int) : MovieDetailsWithCreditsDTO {
-        return RetrofitModule.moviesApi.movieDetailsWithCredits(movieId)
+    suspend fun getMovieDetailsWithCredits(movieId : Int) : MovieDetailsWithCreditsDTO = withContext(Dispatchers.IO) {
+        return@withContext RetrofitModule.moviesApi.movieDetailsWithCredits(movieId).log()
     }
 
     private interface MoviesApi {
