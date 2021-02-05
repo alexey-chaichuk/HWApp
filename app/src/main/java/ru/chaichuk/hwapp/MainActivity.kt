@@ -2,11 +2,7 @@ package ru.chaichuk.hwapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
-import ru.chaichuk.hwapp.api_v3.MovieDbApi
-import ru.chaichuk.hwapp.data.*
+import ru.chaichuk.hwapp.data.Movie
 import ru.chaichuk.hwapp.fragments.MoviesDetailsFragment
 import ru.chaichuk.hwapp.fragments.OnMoviesDetailsClickListener
 import ru.chaichuk.hwapp.fragments.OnMoviesListClickListener

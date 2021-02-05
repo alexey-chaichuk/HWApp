@@ -1,4 +1,4 @@
-package ru.chaichuk.hwapp.listAdapters;
+package ru.chaichuk.hwapp.listAdapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -82,7 +82,7 @@ private class MoviesDataViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
         age.text = StringBuilder().append(movie.minimumAge.toString()).append("+").toString()
         duration.text = StringBuilder().append(movie.runtime.toString()).append(" MIN").toString()
         reviews.text = StringBuilder().append(movie.numberOfRatings).append(" REVIEWS").toString()
-        genre.text = movie.genres.joinToString { it -> it.name }
+        genre.text = movie.genres.joinToString { it.name }
     }
 }
 

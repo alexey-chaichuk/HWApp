@@ -12,6 +12,6 @@ class MovieDetailsViewModel : ViewModel() {
     val movie: LiveData<Movie> get() = _mutableMovie
 
     fun loadMovie (newMovie : Movie) {
-        _mutableMovie.setValue(newMovie)
+        _mutableMovie.value = newMovie
     }
 }

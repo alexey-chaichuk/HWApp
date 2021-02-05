@@ -12,7 +12,7 @@ import coil.request.CachePolicy
 import ru.chaichuk.hwapp.R
 import ru.chaichuk.hwapp.data.Actor
 
-class ActorsListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ActorsListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var actors = listOf<Actor>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -55,5 +55,3 @@ private class ActorsDataViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
     }
 }
 
-private val RecyclerView.ViewHolder.context
-    get() = this.itemView.context

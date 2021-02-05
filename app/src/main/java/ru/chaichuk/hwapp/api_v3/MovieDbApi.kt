@@ -10,7 +10,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.chaichuk.hwapp.BuildConfig
-import ru.chaichuk.hwapp.HWApp
 import ru.chaichuk.hwapp.api_v3.dto.*
 
 class MovieDbApi {
@@ -20,13 +19,13 @@ class MovieDbApi {
         return moviesPage.movies
     }
 
-    suspend fun getMovieDetails(movieId : Int) : MovieDetailsDTO {
+    /*suspend fun getMovieDetails(movieId : Int) : MovieDetailsDTO {
         return RetrofitModule.moviesApi.movieDetails(movieId)
-    }
+    }*/
 
-    suspend fun getMovieCredits(movieId : Int) : CreditsDTO {
+    /*suspend fun getMovieCredits(movieId : Int) : CreditsDTO {
         return RetrofitModule.moviesApi.movieCredits(movieId)
-    }
+    }*/
 
     suspend fun getMovieDetailsWithCredits(movieId : Int) : MovieDetailsWithCreditsDTO {
         return RetrofitModule.moviesApi.movieDetailsWithCredits(movieId)
@@ -36,11 +35,13 @@ class MovieDbApi {
         @GET("movie/popular")
         suspend fun popularMovies(@Query("api_key") apiKey : String = BuildConfig.API_KEY) : MoviesListPageDTO
 
+        /*
         @GET("movie/{movie_id}")
         suspend fun movieDetails(@Path("movie_id") movieId : Int, @Query("api_key") apiKey : String = BuildConfig.API_KEY) : MovieDetailsDTO
 
         @GET("movie/{movie_id}/credits")
         suspend fun movieCredits(@Path("movie_id") movieId : Int, @Query("api_key") apiKey : String = BuildConfig.API_KEY) : CreditsDTO
+         */
 
         @GET("movie/{movie_id}")
         suspend fun movieDetailsWithCredits(@Path("movie_id") movieId : Int, @Query("api_key") apiKey : String = BuildConfig.API_KEY,
@@ -66,7 +67,7 @@ class MovieDbApi {
         val moviesApi: MoviesApi = retrofit.create(MoviesApi::class.java)
     }
 
-    companion object {
+    /*companion object {
         private val TAG = MovieDbApi::class.java.simpleName
-    }
+    }*/
 }

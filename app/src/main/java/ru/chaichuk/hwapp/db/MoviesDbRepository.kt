@@ -1,11 +1,8 @@
 package ru.chaichuk.hwapp.db
 
 import android.content.Context
-import android.util.Log
-import androidx.room.Transaction
 import androidx.room.withTransaction
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import ru.chaichuk.hwapp.data.Actor
@@ -20,7 +17,7 @@ class MoviesDbRepository(applicationContext: Context) {
 
     private val moviesDb = MoviesDataBase.create(applicationContext)
 
-    suspend fun getAllMovies(): List<Movie> = withContext(Dispatchers.IO) {
+    /*suspend fun getAllMovies(): List<Movie> = withContext(Dispatchers.IO) {
         val moviesFromDb: MutableList<Movie> = mutableListOf()
         val movieEntities = moviesDb.moviesDao.getAll()
         for (movieEntity in movieEntities) {
@@ -66,7 +63,7 @@ class MoviesDbRepository(applicationContext: Context) {
         }
 
         return@withContext moviesFromDb
-    }
+    }*/
 
     fun getAllMoviesAsFlow(): Flow<List<Movie>> {
         return moviesDb.moviesDao.getAllAsFlow().map { movieEntities ->

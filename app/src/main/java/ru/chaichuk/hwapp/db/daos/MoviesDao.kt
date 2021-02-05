@@ -1,13 +1,11 @@
 package ru.chaichuk.hwapp.db.daos
 
-import androidx.room.*
-import kotlinx.coroutines.Dispatchers
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
-import ru.chaichuk.hwapp.data.Movie
 import ru.chaichuk.hwapp.db.MoviesDbContract
-import ru.chaichuk.hwapp.db.entities.ActorEntity
-import ru.chaichuk.hwapp.db.entities.GenreEntity
 import ru.chaichuk.hwapp.db.entities.MovieEntity
 
 @Dao

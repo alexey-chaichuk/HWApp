@@ -24,15 +24,15 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
 
     private var listener: OnMoviesDetailsClickListener? = null
 
-    private var rv_actors: RecyclerView? = null
-    private var iv_movie_backdrop: ImageView? = null
-    private var tv_movie_title: TextView? = null
-    private var rb_movie: RatingBar? = null
-    private var tv_genre: TextView? = null
-    private var tv_storyline: TextView? = null
-    private var tv_reviews: TextView? = null
-    private var tv_age: TextView? = null
-    private var tv_cast: TextView? = null
+    private var rvActors: RecyclerView? = null
+    private var ivMovieBackdrop: ImageView? = null
+    private var tvMovieTitle: TextView? = null
+    private var rbMovie: RatingBar? = null
+    private var tvGenre: TextView? = null
+    private var tvStoryline: TextView? = null
+    private var tvReviews: TextView? = null
+    private var tvAge: TextView? = null
+    private var tvCast: TextView? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -52,45 +52,45 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
         textViewBack.setOnClickListener {
             listener?.onDetailsBack()
         }
-        rv_actors = view.findViewById(R.id.rv_actors)
-        rv_actors?.adapter = ActorsListAdapter()
+        rvActors = view.findViewById(R.id.rv_actors)
+        rvActors?.adapter = ActorsListAdapter()
 
-        iv_movie_backdrop = view.findViewById(R.id.imageViewMovieBackdrop)
-        tv_movie_title = view.findViewById((R.id.textViewTitle))
-        rb_movie = view.findViewById(R.id.ratingBarMovie)
-        tv_genre = view.findViewById(R.id.textViewGenre)
-        tv_storyline = view.findViewById(R.id.textViewStorylineText)
-        tv_reviews = view.findViewById(R.id.textViewReviews)
-        tv_age = view.findViewById(R.id.textViewAge)
-        tv_cast = view.findViewById(R.id.textViewCastTitle)
+        ivMovieBackdrop = view.findViewById(R.id.imageViewMovieBackdrop)
+        tvMovieTitle = view.findViewById((R.id.textViewTitle))
+        rbMovie = view.findViewById(R.id.ratingBarMovie)
+        tvGenre = view.findViewById(R.id.textViewGenre)
+        tvStoryline = view.findViewById(R.id.textViewStorylineText)
+        tvReviews = view.findViewById(R.id.textViewReviews)
+        tvAge = view.findViewById(R.id.textViewAge)
+        tvCast = view.findViewById(R.id.textViewCastTitle)
 
         viewModel.movie.observe(this.viewLifecycleOwner, this::updateMovie)
         arguments?.getParcelable<Movie>("movie")?.let { viewModel.loadMovie(it) }
     }
 
     override fun onDestroyView() {
-        rv_actors = null
+        rvActors = null
         super.onDestroyView()
     }
 
     private fun updateMovie(movie: Movie) {
         Log.d("HWApp", movie.backdrop)
-        iv_movie_backdrop?.load(movie.backdrop) {
+        ivMovieBackdrop?.load(movie.backdrop) {
             crossfade(true)
             diskCachePolicy(CachePolicy.ENABLED)
         }
-        tv_movie_title?.text = movie.title
-        rb_movie?.rating = movie.ratings / 2
-        tv_genre?.text = movie.genres.joinToString { genre -> genre.name }
-        tv_storyline?.text = movie.overview
-        tv_reviews?.text =
+        tvMovieTitle?.text = movie.title
+        rbMovie?.rating = movie.ratings / 2
+        tvGenre?.text = movie.genres.joinToString { genre -> genre.name }
+        tvStoryline?.text = movie.overview
+        tvReviews?.text =
             StringBuilder().append(movie.numberOfRatings).append(" REVIEWS").toString()
-        tv_age?.text = StringBuilder().append(movie.minimumAge.toString()).append("+").toString()
+        tvAge?.text = StringBuilder().append(movie.minimumAge.toString()).append("+").toString()
         if (movie.actors.isEmpty()) {
-            tv_cast?.visibility = View.GONE
-            rv_actors?.visibility = View.GONE
+            tvCast?.visibility = View.GONE
+            rvActors?.visibility = View.GONE
         } else {
-            (rv_actors?.adapter as? ActorsListAdapter)?.apply {
+            (rvActors?.adapter as? ActorsListAdapter)?.apply {
                 bindActors(movie.actors)
             }
         }
