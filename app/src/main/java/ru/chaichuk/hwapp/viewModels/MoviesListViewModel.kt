@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.chaichuk.hwapp.BuildConfig
 import ru.chaichuk.hwapp.HWApp
@@ -13,15 +14,18 @@ import ru.chaichuk.hwapp.data.Genre
 import ru.chaichuk.hwapp.data.Movie
 import ru.chaichuk.hwapp.data.MoviesListLoader
 import ru.chaichuk.hwapp.db.MoviesDbRepository
+import ru.chaichuk.hwapp.utils.log
 
 class MoviesListViewModel : ViewModel() {
 
     private val movies: MutableList<Movie> = mutableListOf()
     private val moviesFlow: Flow<List<Movie>>
 
+    private val _mutableMoviesList = MutableLiveData<List<Movie>>(emptyList())
     private val _mutableLoadingState = MutableLiveData<Boolean>(false)
 
-    val moviesList: LiveData<List<Movie>> get() = moviesFlow.asLiveData()
+    //val moviesList: LiveData<List<Movie>> get() = moviesFlow.asLiveData()
+    val moviesList: LiveData<List<Movie>> get() = _mutableMoviesList
     val loadingState: LiveData<Boolean> get() = _mutableLoadingState
 
     init {
@@ -29,7 +33,13 @@ class MoviesListViewModel : ViewModel() {
         moviesFlow = moviesDbRepository.getAllMoviesAsFlow()
 
         viewModelScope.launch {
+            moviesFlow.collect { _mutableMoviesList.postValue(it.log()) }
+        }
+
+        viewModelScope.launch {
             _mutableLoadingState.value = true
+
+            Log.d("HWApp", "<--- starting data receiving from internet")
             val movieDbApi = MovieDbApi()
             val moviesDTO = movieDbApi.getPopularMovies()
 
@@ -64,9 +74,14 @@ class MoviesListViewModel : ViewModel() {
                 )
                 movies.add(movie)
             }
+
+            Log.d("HWApp", "<--- delay in receiving data from internet")
             delay(2_000)
+
             _mutableLoadingState.value = false
+            Log.d("HWApp", "<--- saving data to database")
             moviesDbRepository.saveAllMovies(movies)
+            Log.d("HWApp", "<--- data saved to database")
         }
     }
 }

@@ -1,6 +1,7 @@
 package ru.chaichuk.hwapp.db
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Transaction
 import androidx.room.withTransaction
 import kotlinx.coroutines.Dispatchers
@@ -13,6 +14,7 @@ import ru.chaichuk.hwapp.data.Movie
 import ru.chaichuk.hwapp.db.entities.ActorEntity
 import ru.chaichuk.hwapp.db.entities.GenreEntity
 import ru.chaichuk.hwapp.db.entities.MovieEntity
+import ru.chaichuk.hwapp.utils.log
 
 class MoviesDbRepository(applicationContext: Context) {
 
@@ -101,11 +103,10 @@ class MoviesDbRepository(applicationContext: Context) {
                         )
                     },
                     like = movieEntity.like
-                )
+                ).log()
             }
-        }
-            //.debounce(1_000)
-            .conflate()
+        }.log()
+            .conflate().log()
             .flowOn(Dispatchers.IO)
     }
 
