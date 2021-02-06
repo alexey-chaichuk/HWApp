@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class MovieDTO (
 
     @SerialName("poster_path")
-    val posterPath: String,
+    val posterPath: String? = null,
 
     @SerialName("adult")
     val adult: Boolean,
@@ -34,7 +34,7 @@ data class MovieDTO (
     val title: String,
 
     @SerialName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String? = null,
 
     @SerialName("popularity")
     val popularity: Double,
