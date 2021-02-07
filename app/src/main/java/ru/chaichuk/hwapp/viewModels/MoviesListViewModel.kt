@@ -38,32 +38,5 @@ class MoviesListViewModel : ViewModel() {
                 delay(60_000)
             }
         }
-
-/*        viewModelScope.launch {
-            delay(20_000)
-
-            _mutableLoadingState.value = true
-
-            Log.d("HWApp", "<--- starting data receiving from internet")
-            var moviesFromNet = MovieDbApi().getMoviesFromNet()
-
-            _mutableLoadingState.value = false
-            Log.d("HWApp", "<--- saving data to database")
-            moviesDbRepository.saveAllMovies(moviesFromNet)
-            Log.d("HWApp", "<--- data saved to database")
-
-            delay(10 * 60_000)
-
-            _mutableLoadingState.value = true
-
-            Log.d("HWApp", "<--- starting data receiving from internet")
-            moviesFromNet = MovieDbApi().getMoviesFromNet()
-
-            _mutableLoadingState.value = false
-            Log.d("HWApp", "<--- saving data to database")
-            moviesDbRepository.saveAllMovies(moviesFromNet)
-            Log.d("HWApp", "<--- data saved to database")
-        }*/
-
     }
 }
