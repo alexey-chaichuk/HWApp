@@ -2,10 +2,7 @@ package ru.chaichuk.hwapp
 
 import android.app.Application
 import android.content.Context
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
+import androidx.work.*
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.util.CoilUtils
@@ -40,14 +37,16 @@ class HWApp : Application(), ImageLoaderFactory {
             .setRequiresBatteryNotLow(true)
             .build()
 
-        val dbUpdateWorker = PeriodicWorkRequest.Builder(
-            //DbUpdateWorker::class.java, 8, TimeUnit.HOURS)
-            DbUpdateWorker::class.java, 15, TimeUnit.MINUTES)
+        val dbUpdateWorker = PeriodicWorkRequestBuilder<DbUpdateWorker>(
+            //8, TimeUnit.HOURS)
+            15, TimeUnit.MINUTES)
             .setConstraints(constraints)
             .build()
 
-        WorkManager.getInstance(appContext).cancelAllWork()
-        WorkManager.getInstance(appContext).enqueue(dbUpdateWorker)
+        WorkManager.getInstance(appContext).enqueueUniquePeriodicWork(
+            "movieDbUpdate",
+            ExistingPeriodicWorkPolicy.REPLACE,
+            dbUpdateWorker)
     }
 
     override fun newImageLoader(): ImageLoader {
