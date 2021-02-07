@@ -20,54 +20,6 @@ class MoviesDbRepository(applicationContext: Context) {
     private val moviesDb = MoviesDataBase.create(applicationContext)
     private val moviesFlow : Flow<List<Movie>> = getAllMoviesAsFlow()
 
-    /*suspend fun getAllMovies(): List<Movie> = withContext(Dispatchers.IO) {
-        val moviesFromDb: MutableList<Movie> = mutableListOf()
-        val movieEntities = moviesDb.moviesDao.getAll()
-        for (movieEntity in movieEntities) {
-            val genres = movieEntity.genreIds.split(",").filter {
-                it.isNotEmpty()
-            }.map {
-                moviesDb.genresDao.getById(it.toInt())
-            }.map {
-                Genre(
-                    id = it.id,
-                    name = it.name
-                )
-            }
-
-            val actors = movieEntity.actorIds.split(",").filter {
-                it.isNotEmpty()
-            }.map {
-                moviesDb.actorsDao.getById(it.toInt())
-            }.map {
-                Actor(
-                    id = it.id,
-                    name = it.name,
-                    picture = it.picture
-                )
-            }
-
-            moviesFromDb.add(
-                Movie(
-                    id = movieEntity.id,
-                    title = movieEntity.title,
-                    overview = movieEntity.overview,
-                    poster = movieEntity.poster,
-                    backdrop = movieEntity.backdrop,
-                    ratings = movieEntity.ratings,
-                    numberOfRatings = movieEntity.numberOfRatings,
-                    minimumAge = movieEntity.minimumAge,
-                    runtime = movieEntity.runtime,
-                    genres = genres,
-                    actors = actors,
-                    like = movieEntity.like
-                )
-            )
-        }
-
-        return@withContext moviesFromDb
-    }*/
-
     fun getMoviesFlow() : Flow<List<Movie>> {
         return moviesFlow
     }
@@ -110,7 +62,6 @@ class MoviesDbRepository(applicationContext: Context) {
                 ).log("getAllMoviesAsFlow movie item")
             }
         }.log("getAllMoviesAsFlow map")
-            //.conflate().log("getAllMoviesAsFlow conflate")
             .flowOn(Dispatchers.IO)
     }
 
