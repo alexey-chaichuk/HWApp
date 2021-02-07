@@ -10,7 +10,7 @@ data class MovieDetailsWithCreditsDTO (
     val adult: Boolean,
 
     @SerialName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String? = null,
 
     @SerialName("belongs_to_collection")
     val belongsToCollection: CollectionDTO? = null,
@@ -22,13 +22,13 @@ data class MovieDetailsWithCreditsDTO (
     val genres: List<GenreDTO>,
 
     @SerialName("homepage")
-    val homepage: String,
+    val homepage: String? = null,
 
     @SerialName("id")
     val id: Long,
 
     @SerialName("imdb_id")
-    val imdbID: String,
+    val imdbID: String? = null,
 
     @SerialName("original_language")
     val originalLanguage: String,

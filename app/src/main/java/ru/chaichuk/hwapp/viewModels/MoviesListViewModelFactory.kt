@@ -2,8 +2,6 @@ package ru.chaichuk.hwapp.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import ru.chaichuk.hwapp.data.MoviesListLoader
-import android.content.Context
 
 class MoviesListViewModelFactory : ViewModelProvider.Factory {
 

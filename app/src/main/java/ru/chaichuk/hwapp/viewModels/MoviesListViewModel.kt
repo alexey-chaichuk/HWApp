@@ -5,80 +5,65 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import ru.chaichuk.hwapp.BuildConfig
 import ru.chaichuk.hwapp.HWApp
-import ru.chaichuk.hwapp.api_v3.MovieDbApi
-import ru.chaichuk.hwapp.data.Actor
-import ru.chaichuk.hwapp.data.Genre
 import ru.chaichuk.hwapp.data.Movie
-import ru.chaichuk.hwapp.data.MoviesListLoader
-import ru.chaichuk.hwapp.db.MoviesDbRepository
+import ru.chaichuk.hwapp.utils.log
 
-class MoviesListViewModel : ViewModel(){
+class MoviesListViewModel : ViewModel() {
 
-    private val movies : MutableList<Movie> = mutableListOf()
+    private val moviesFlow: Flow<List<Movie>>
 
     private val _mutableMoviesList = MutableLiveData<List<Movie>>(emptyList())
-    private val _mutableLoadingState = MutableLiveData<Boolean>(false)
-
+    private val _mutableLoadingState = MutableLiveData(false)
 
     val moviesList: LiveData<List<Movie>> get() = _mutableMoviesList
     val loadingState: LiveData<Boolean> get() = _mutableLoadingState
 
-    fun loadMoviesList() {
-        if(_mutableMoviesList.value?.isEmpty() == true) {
+    init {
+        val moviesDbRepository = HWApp.appMoviesDbRepository()
+        moviesFlow = moviesDbRepository.getMoviesFlow()
 
-            viewModelScope.launch {
+        viewModelScope.launch {
+            moviesFlow.collect { _mutableMoviesList.value = it.log("moviesFlow.collect") }
+        }
 
-                _mutableLoadingState.value = true
-
-
-                val moviesDbRepository = MoviesDbRepository(HWApp.appContext())
-                val moviesFromDb = moviesDbRepository.getAllMovies()
-                Log.d("HWApp", moviesFromDb.toString())
-                Log.d("HWApp", moviesFromDb.size.toString())
-                _mutableMoviesList.value = moviesFromDb
-
-                val movieDbApi = MovieDbApi()
-                val moviesDTO = movieDbApi.getPopularMovies()
-
-                for (movieDTO in moviesDTO) {
-                    val movieDetailsWithCreditsDTO = movieDbApi.getMovieDetailsWithCredits((movieDTO.id.toInt()))
-                    val genres : List<Genre> = movieDetailsWithCreditsDTO.genres.map { Genre(it.id.toInt(), it.name) }
-                    val actors : List<Actor> = movieDetailsWithCreditsDTO.credits.cast.mapNotNull {
-                        it.profilePath?.let { picture ->
-                            Actor(
-                                it.id.toInt(),
-                                it.name,
-                                BuildConfig.BASE_IMAGE_W200_URL + picture
-                            )
-                        }
-                    }
-
-                    val movie = Movie (
-                        movieDTO.id.toInt(),
-                        movieDTO.title,
-                        movieDTO.overview,
-                        BuildConfig.BASE_IMAGE_W780_URL + movieDTO.posterPath,
-                        BuildConfig.BASE_IMAGE_W780_URL + movieDTO.backdropPath,
-                        movieDTO.voteAverage.toFloat(),
-                        movieDTO.voteCount.toInt(),
-                        if(movieDTO.adult) 16 else 13,
-                        movieDetailsWithCreditsDTO.runtime.toInt(),
-                        genres,
-                        actors,
-                        true
-                    )
-                    movies.add(movie)
-                }
-
-                moviesDbRepository.saveAllMovies(movies)
-
-                _mutableMoviesList.value = movies.sortedBy { it.ratings }.asReversed()
-                _mutableLoadingState.value = false
-
+        viewModelScope.launch {
+            var i = 1
+            while(true) {
+                Log.d("HWAppD", "${Thread.currentThread().name} -> ${i++.toString()} min")
+                delay(60_000)
             }
         }
+
+/*        viewModelScope.launch {
+            delay(20_000)
+
+            _mutableLoadingState.value = true
+
+            Log.d("HWApp", "<--- starting data receiving from internet")
+            var moviesFromNet = MovieDbApi().getMoviesFromNet()
+
+            _mutableLoadingState.value = false
+            Log.d("HWApp", "<--- saving data to database")
+            moviesDbRepository.saveAllMovies(moviesFromNet)
+            Log.d("HWApp", "<--- data saved to database")
+
+            delay(10 * 60_000)
+
+            _mutableLoadingState.value = true
+
+            Log.d("HWApp", "<--- starting data receiving from internet")
+            moviesFromNet = MovieDbApi().getMoviesFromNet()
+
+            _mutableLoadingState.value = false
+            Log.d("HWApp", "<--- saving data to database")
+            moviesDbRepository.saveAllMovies(moviesFromNet)
+            Log.d("HWApp", "<--- data saved to database")
+        }*/
+
     }
 }
