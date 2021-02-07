@@ -12,14 +12,14 @@ import ru.chaichuk.hwapp.db.MoviesDbRepository
 
 class DbUpdateWorker(context: Context, params: WorkerParameters): CoroutineWorker(context, params) {
 
-    override suspend fun doWork(): Result = withContext(Dispatchers.IO){
+    override suspend fun doWork(): Result {
 
         Log.d("HWAppWorker", "<--- worker (${Thread.currentThread().name}) starting data receive from internet")
         val moviesFromNet = MovieDbApi().getMoviesFromNet()
         Log.d("HWAppWorker", "<--- worker (${Thread.currentThread().name}) saving data to database")
         HWApp.appMoviesDbRepository().saveAllMovies(moviesFromNet)
         Log.d("HWAppWorker", "<--- worker (${Thread.currentThread().name}) data saved to database")
-        return@withContext Result.success()
+        return Result.success()
     }
 
 }

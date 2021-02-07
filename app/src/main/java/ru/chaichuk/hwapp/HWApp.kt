@@ -33,8 +33,8 @@ class HWApp : Application(), ImageLoaderFactory {
         dbRepository = MoviesDbRepository(appContext)
 
         val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .setRequiresBatteryNotLow(true)
+            .setRequiredNetworkType(NetworkType.UNMETERED)
+            .setRequiresCharging(true)
             .build()
 
         val dbUpdateWorker = PeriodicWorkRequestBuilder<DbUpdateWorker>(
