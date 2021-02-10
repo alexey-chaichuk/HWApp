@@ -1,8 +1,6 @@
 package ru.chaichuk.hwapp.db
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import androidx.room.withTransaction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -13,18 +11,23 @@ import ru.chaichuk.hwapp.data.Movie
 import ru.chaichuk.hwapp.db.entities.ActorEntity
 import ru.chaichuk.hwapp.db.entities.GenreEntity
 import ru.chaichuk.hwapp.db.entities.MovieEntity
+import ru.chaichuk.hwapp.notifications.MovieNotification
+import ru.chaichuk.hwapp.notifications.MovieNotificationImpl
 import ru.chaichuk.hwapp.utils.log
 
-class MoviesDbRepository(applicationContext: Context) {
+class MoviesDbRepository(context: Context) {
 
-    private val moviesDb = MoviesDataBase.create(applicationContext)
+    private val movieNotification : MovieNotification = MovieNotificationImpl(context)
+    private val moviesDb = MoviesDataBase.create(context)
     private val moviesFlow : Flow<List<Movie>> = getAllMoviesAsFlow()
+
 
     fun getMoviesFlow() : Flow<List<Movie>> {
         return moviesFlow
     }
 
     private fun getAllMoviesAsFlow(): Flow<List<Movie>> {
+        movieNotification.initialize()
         return moviesDb.moviesDao.getAllAsFlow().map { movieEntities ->
             movieEntities.map { movieEntity ->
                 Movie(
@@ -60,9 +63,15 @@ class MoviesDbRepository(applicationContext: Context) {
                     },
                     like = movieEntity.like
                 ).log("getAllMoviesAsFlow movie item")
-            }
-        }.log("getAllMoviesAsFlow map")
-            .flowOn(Dispatchers.IO)
+            }.getFirstMovieInListForNotification()
+        }.flowOn(Dispatchers.IO)
+    }
+
+    private fun List<Movie>.getFirstMovieInListForNotification() : List<Movie> {
+        if (this.size > 1) {
+            movieNotification.showNotification(this[0])
+        }
+        return this
     }
 
     suspend fun saveAllMovies(movies: List<Movie>) = withContext(Dispatchers.IO) {

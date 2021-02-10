@@ -33,7 +33,7 @@ class HWApp : Application(), ImageLoaderFactory {
         dbRepository = MoviesDbRepository(appContext)
 
         val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.UNMETERED)
+            //.setRequiredNetworkType(NetworkType.UNMETERED)
             .setRequiresCharging(true)
             .build()
 
