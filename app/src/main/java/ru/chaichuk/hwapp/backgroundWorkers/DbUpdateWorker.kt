@@ -21,6 +21,10 @@ class DbUpdateWorker(context: Context, params: WorkerParameters): CoroutineWorke
             Log.d("HWAppWorker", "<--- worker (${Thread.currentThread().name}) saving data to database")
             HWApp.appMoviesDbRepository().saveAllMovies(moviesFromNet)
             Log.d("HWAppWorker", "<--- worker (${Thread.currentThread().name}) data saved to database")
+
+            if(moviesFromNet.isNotEmpty()) {
+                HWApp.appMovieNotification().showNotification(moviesFromNet.sortedByDescending { it.ratings }[0])
+            }
         }
         catch (e : Exception) {
             Log.d("HWAppWorker", e.printStackTrace().toString())

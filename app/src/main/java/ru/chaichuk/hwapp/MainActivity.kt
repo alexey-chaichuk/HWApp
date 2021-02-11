@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commitNow
+import kotlinx.coroutines.runBlocking
+import ru.chaichuk.hwapp.api_v3.MovieDbApi
 import ru.chaichuk.hwapp.data.Movie
 import ru.chaichuk.hwapp.fragments.MoviesDetailsFragment
 import ru.chaichuk.hwapp.fragments.OnMoviesDetailsClickListener
@@ -18,18 +20,25 @@ class MainActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+    }
 
-        if (savedInstanceState == null) {
-            intent?.let(::handleIntent)
-        }
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        intent?.let(::handleIntent)
     }
 
     private fun handleIntent(intent: Intent) {
         when (intent.action) {
             Intent.ACTION_VIEW -> {
-                val id = intent.data?.lastPathSegment?.toLongOrNull()
-                if (id != null) {
+                val id = intent.data?.lastPathSegment?.toIntOrNull()
+                id?.apply {
                     Log.d("HWApp", "Handle intent : ${id}")
+                    runBlocking {
+                        val movie = MovieDbApi().getMovieByIdFromNet(id)
+                        HWApp.appMovieNotification().dismissNotification(id)
+                        movie?.apply { onMovieClick(movie)}
+                    }
                 }
             }
         }
