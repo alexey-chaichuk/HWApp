@@ -50,6 +50,8 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
     private var isRationaleShown = false
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
+    private var runtime: Int = 0
+
     @SuppressLint("MissingPermission")
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -127,6 +129,8 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
                 bindActors(movie.actors)
             }
         }
+
+        runtime = movie.runtime
     }
 
 
@@ -223,7 +227,7 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
                             calIntent.putExtra("beginTime", calendarEvent.timeInMillis)
                             calIntent.putExtra(
                                 "endTime",
-                                calendarEvent.timeInMillis + 60 * 60 * 1000
+                                calendarEvent.timeInMillis + (runtime * 60_000)
                             )
                             calIntent.putExtra("title", tvMovieTitle?.text)
                             startActivity(calIntent)

@@ -61,16 +61,9 @@ class MoviesDbRepository(context: Context) {
                     },
                     like = movieEntity.like
                 ).log("getAllMoviesAsFlow movie item")
-            }/*.getFirstMovieInListForNotification()*/
+            }
         }.flowOn(Dispatchers.IO)
     }
-
-    /*private fun List<Movie>.getFirstMovieInListForNotification() : List<Movie> {
-        if (this.size > 1) {
-            HWApp.appMovieNotification().showNotification(this[0])
-        }
-        return this
-    }*/
 
     suspend fun saveAllMovies(movies: List<Movie>) = withContext(Dispatchers.IO) {
 
