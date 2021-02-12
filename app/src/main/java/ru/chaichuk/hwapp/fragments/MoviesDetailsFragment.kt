@@ -2,6 +2,8 @@ package ru.chaichuk.hwapp.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -26,6 +28,7 @@ import ru.chaichuk.hwapp.R
 import ru.chaichuk.hwapp.data.Movie
 import ru.chaichuk.hwapp.viewModels.MovieDetailsViewModel
 import ru.chaichuk.hwapp.viewModels.MovieDetailsViewModelFactory
+import java.util.*
 
 class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
 
@@ -150,7 +153,7 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
     private fun onCalendarPermissionGranted() {
         context?.let {
             Toast.makeText(context, "Есть права на запись в календарь", Toast.LENGTH_SHORT).show()
-            TODO("add calendar event")
+            addCalendarEvent()
         }
     }
 
@@ -193,6 +196,47 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
                     dialog.dismiss()
                 }
                 .show()
+        }
+    }
+
+    private fun addCalendarEvent() {
+        context?.let {
+            val c = Calendar.getInstance()
+
+            DatePickerDialog(
+                it,
+                { _, year, monthOfYear, dayOfMonth ->
+                    Log.d("HWApp", "${year}/${monthOfYear + 1}/${dayOfMonth}")
+                    TimePickerDialog(
+                        it,
+                        { _, hourOfDay, minute ->
+                            val calendarEvent = Calendar.getInstance()
+                            calendarEvent.set(
+                                year,
+                                monthOfYear,
+                                dayOfMonth,
+                                hourOfDay,
+                                minute
+                            )
+                            val calIntent = Intent(Intent.ACTION_EDIT)
+                            calIntent.type = "vnd.android.cursor.item/event"
+                            calIntent.putExtra("beginTime", calendarEvent.timeInMillis)
+                            calIntent.putExtra(
+                                "endTime",
+                                calendarEvent.timeInMillis + 60 * 60 * 1000
+                            )
+                            calIntent.putExtra("title", tvMovieTitle?.text)
+                            startActivity(calIntent)
+                        },
+                        c.get(Calendar.HOUR_OF_DAY),
+                        c.get(Calendar.MINUTE),
+                        true
+                    ).show()
+                },
+                c.get(Calendar.YEAR),
+                c.get(Calendar.MONTH),
+                c.get(Calendar.DAY_OF_MONTH)
+            ).show()
         }
     }
 
