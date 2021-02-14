@@ -210,7 +210,6 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
             DatePickerDialog(
                 it,
                 { _, year, monthOfYear, dayOfMonth ->
-                    Log.d("HWApp", "${year}/${monthOfYear + 1}/${dayOfMonth}")
                     TimePickerDialog(
                         it,
                         { _, hourOfDay, minute ->
