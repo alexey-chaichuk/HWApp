@@ -42,7 +42,6 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
         rvMoviesList?.adapter = MoviesListAdapter(clickListener)
         pbLoadingState = view.findViewById(R.id.movies_list_loader)
 
-        //viewModel.loadMoviesList()
         viewModel.moviesList.observe(this.viewLifecycleOwner, this::updateMoviesList)
         viewModel.loadingState.observe(this.viewLifecycleOwner, this::updateLoadingState)
     }

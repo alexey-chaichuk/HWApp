@@ -1,12 +1,23 @@
 package ru.chaichuk.hwapp.fragments
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.RatingBar
-import android.widget.TextView
+import android.widget.*
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresPermission
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +28,7 @@ import ru.chaichuk.hwapp.R
 import ru.chaichuk.hwapp.data.Movie
 import ru.chaichuk.hwapp.viewModels.MovieDetailsViewModel
 import ru.chaichuk.hwapp.viewModels.MovieDetailsViewModelFactory
+import java.util.*
 
 class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
 
@@ -34,15 +46,33 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
     private var tvAge: TextView? = null
     private var tvCast: TextView? = null
 
+    private var btnNewCalendarEvent: Button? = null
+    private var isRationaleShown = false
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+
+    private var runtime: Int = 0
+
+    @SuppressLint("MissingPermission")
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnMoviesDetailsClickListener) {
             listener = context
         }
+
+        requestPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                onCalendarPermissionGranted()
+            } else {
+                onCalendarPermissionNotGranted()
+            }
+        }
     }
 
     override fun onDetach() {
         listener = null
+        requestPermissionLauncher.unregister()
         super.onDetach()
     }
 
@@ -63,6 +93,11 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
         tvReviews = view.findViewById(R.id.textViewReviews)
         tvAge = view.findViewById(R.id.textViewAge)
         tvCast = view.findViewById(R.id.textViewCastTitle)
+
+        btnNewCalendarEvent = view.findViewById(R.id.btnAddMovieToCalendar)
+        btnNewCalendarEvent?.setOnClickListener {
+            onNewCalendarEvent()
+        }
 
         viewModel.movie.observe(this.viewLifecycleOwner, this::updateMovie)
         arguments?.getParcelable<Movie>("movie")?.let { viewModel.loadMovie(it) }
@@ -94,5 +129,118 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
                 bindActors(movie.actors)
             }
         }
+
+        runtime = movie.runtime
     }
+
+
+    private fun onNewCalendarEvent() {
+        activity?.let {
+            when {
+                ContextCompat.checkSelfPermission(it, Manifest.permission.WRITE_CALENDAR)
+                        == PackageManager.PERMISSION_GRANTED -> onCalendarPermissionGranted()
+                shouldShowRequestPermissionRationale(Manifest.permission.WRITE_CALENDAR) ->
+                    showCalendarPermissionExplanationDialog()
+                isRationaleShown -> showCalendarPermissionDeniedDialog()
+                else -> requestCalendarPermission()
+            }
+        }
+    }
+
+    private fun requestCalendarPermission() {
+        context?.let {
+            requestPermissionLauncher.launch(Manifest.permission.WRITE_CALENDAR)
+        }
+    }
+
+    @RequiresPermission(Manifest.permission.WRITE_CALENDAR)
+    private fun onCalendarPermissionGranted() {
+        context?.let {
+            Toast.makeText(context, "Есть права на запись в календарь", Toast.LENGTH_SHORT).show()
+            addCalendarEvent()
+        }
+    }
+
+    private fun onCalendarPermissionNotGranted() {
+        context?.let {
+            Toast.makeText(context, "Нет прав на запись в календарь", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showCalendarPermissionExplanationDialog() {
+        context?.let {
+            AlertDialog.Builder(it)
+                .setMessage("Нам очень нужен этот календарь")
+                .setPositiveButton("Разрешить") { dialog, _ ->
+                    isRationaleShown = true
+                    requestCalendarPermission()
+                    dialog.dismiss()
+                }
+                .setNegativeButton("Запретить") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
+    }
+
+    private fun showCalendarPermissionDeniedDialog() {
+        context?.let {
+            AlertDialog.Builder(it)
+                .setMessage("Доступ к календарю запрещен. Разрешите его в настройках программы")
+                .setPositiveButton("Перейти к настройкам") { dialog, _ ->
+                    startActivity(
+                        Intent(
+                            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                            Uri.parse("package:" + it.packageName)
+                        )
+                    )
+                    dialog.dismiss()
+                }
+                .setNegativeButton("Не разрешать") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
+    }
+
+    private fun addCalendarEvent() {
+        context?.let {
+            val c = Calendar.getInstance()
+
+            DatePickerDialog(
+                it,
+                { _, year, monthOfYear, dayOfMonth ->
+                    TimePickerDialog(
+                        it,
+                        { _, hourOfDay, minute ->
+                            val calendarEvent = Calendar.getInstance()
+                            calendarEvent.set(
+                                year,
+                                monthOfYear,
+                                dayOfMonth,
+                                hourOfDay,
+                                minute
+                            )
+                            val calIntent = Intent(Intent.ACTION_EDIT)
+                            calIntent.type = "vnd.android.cursor.item/event"
+                            calIntent.putExtra("beginTime", calendarEvent.timeInMillis)
+                            calIntent.putExtra(
+                                "endTime",
+                                calendarEvent.timeInMillis + (runtime * 60_000)
+                            )
+                            calIntent.putExtra("title", tvMovieTitle?.text)
+                            startActivity(calIntent)
+                        },
+                        c.get(Calendar.HOUR_OF_DAY),
+                        c.get(Calendar.MINUTE),
+                        true
+                    ).show()
+                },
+                c.get(Calendar.YEAR),
+                c.get(Calendar.MONTH),
+                c.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
+    }
+
 }

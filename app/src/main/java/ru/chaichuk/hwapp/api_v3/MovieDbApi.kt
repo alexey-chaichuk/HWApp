@@ -50,7 +50,7 @@ class MovieDbApi {
                     movieDTO.voteAverage.toFloat(),
                     movieDTO.voteCount.toInt(),
                     if (movieDTO.adult) 16 else 13,
-                    movieDetailsWithCreditsDTO.runtime.toInt(),
+                    movieDetailsWithCreditsDTO.runtime?.toInt() ?: 60,
                     genres,
                     actors,
                     true
@@ -58,13 +58,44 @@ class MovieDbApi {
             }
     }
 
+    suspend fun getMovieByIdFromNet(id : Int) : Movie? {
+        var movie : Movie? = null
+        val movieDTO = getMovieDetailsWithCredits(id)
+
+        if (movieDTO != null) {
+            movie = Movie(
+                movieDTO.id.toInt(),
+                movieDTO.title,
+                movieDTO.overview,
+                BuildConfig.BASE_IMAGE_W780_URL + movieDTO.posterPath,
+                BuildConfig.BASE_IMAGE_W780_URL + movieDTO.backdropPath,
+                movieDTO.voteAverage.toFloat(),
+                movieDTO.voteCount.toInt(),
+                if (movieDTO.adult) 16 else 13,
+                movieDTO.runtime?.toInt() ?: 60,
+                movieDTO.genres.map { Genre(it.id.toInt(), it.name) },
+                movieDTO.credits.cast.mapNotNull { castDTO ->
+                    castDTO.profilePath?.let { picture ->
+                        Actor(
+                            castDTO.id.toInt(),
+                            castDTO.name,
+                            BuildConfig.BASE_IMAGE_W200_URL + picture
+                        )
+                    }
+                },
+                true
+            )
+        }
+
+        return movie
+    }
+
     private suspend fun getPopularMovies(page : Int) : List <MovieDTO> = withContext(Dispatchers.IO) {
-        val moviesPage = RetrofitModule.moviesApi.popularMovies(page = page).log("getPopularMovies api item")
-        return@withContext moviesPage.movies
+        RetrofitModule.moviesApi.popularMovies(page = page).log("getPopularMovies api item").movies
     }
 
     private suspend fun getMovieDetailsWithCredits(movieId : Int) : MovieDetailsWithCreditsDTO = withContext(Dispatchers.IO) {
-        return@withContext RetrofitModule.moviesApi.movieDetailsWithCredits(movieId).log("getMovieDetailsWithCredits api item")
+        RetrofitModule.moviesApi.movieDetailsWithCredits(movieId).log("getMovieDetailsWithCredits api item")
     }
 
     private interface MoviesApi {

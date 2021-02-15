@@ -52,13 +52,13 @@ data class MovieDetailsWithCreditsDTO (
     val productionCountries: List<ProductionCountryDTO>,
 
     @SerialName("release_date")
-    val releaseDate: String,
+    val releaseDate: String? = null,
 
     @SerialName("revenue")
     val revenue: Long,
 
     @SerialName("runtime")
-    val runtime: Long,
+    val runtime: Long? = 60,
 
     @SerialName("spoken_languages")
     val spokenLanguages: List<SpokenLanguageDTO>,

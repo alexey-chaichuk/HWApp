@@ -1,11 +1,11 @@
 package ru.chaichuk.hwapp.db
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import androidx.room.withTransaction
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import ru.chaichuk.hwapp.data.Actor
 import ru.chaichuk.hwapp.data.Genre
@@ -15,10 +15,11 @@ import ru.chaichuk.hwapp.db.entities.GenreEntity
 import ru.chaichuk.hwapp.db.entities.MovieEntity
 import ru.chaichuk.hwapp.utils.log
 
-class MoviesDbRepository(applicationContext: Context) {
+class MoviesDbRepository(context: Context) {
 
-    private val moviesDb = MoviesDataBase.create(applicationContext)
+    private val moviesDb = MoviesDataBase.create(context)
     private val moviesFlow : Flow<List<Movie>> = getAllMoviesAsFlow()
+
 
     fun getMoviesFlow() : Flow<List<Movie>> {
         return moviesFlow
@@ -61,8 +62,7 @@ class MoviesDbRepository(applicationContext: Context) {
                     like = movieEntity.like
                 ).log("getAllMoviesAsFlow movie item")
             }
-        }.log("getAllMoviesAsFlow map")
-            .flowOn(Dispatchers.IO)
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun saveAllMovies(movies: List<Movie>) = withContext(Dispatchers.IO) {
