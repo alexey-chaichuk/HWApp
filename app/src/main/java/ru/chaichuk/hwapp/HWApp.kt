@@ -43,7 +43,7 @@ class HWApp : Application(), ImageLoaderFactory {
         movieNotification.initialize()
 
         val constraints = Constraints.Builder()
-            //.setRequiredNetworkType(NetworkType.UNMETERED)
+            .setRequiredNetworkType(NetworkType.UNMETERED)
             .setRequiresCharging(true)
             .build()
 
