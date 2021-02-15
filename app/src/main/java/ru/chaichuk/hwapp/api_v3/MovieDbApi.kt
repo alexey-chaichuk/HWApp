@@ -63,7 +63,7 @@ class MovieDbApi {
         val movieDTO = getMovieDetailsWithCredits(id)
 
         if (movieDTO != null) {
-            movie =         Movie(
+            movie = Movie(
                 movieDTO.id.toInt(),
                 movieDTO.title,
                 movieDTO.overview,
@@ -91,12 +91,11 @@ class MovieDbApi {
     }
 
     private suspend fun getPopularMovies(page : Int) : List <MovieDTO> = withContext(Dispatchers.IO) {
-        val moviesPage = RetrofitModule.moviesApi.popularMovies(page = page).log("getPopularMovies api item")
-        return@withContext moviesPage.movies
+        RetrofitModule.moviesApi.popularMovies(page = page).log("getPopularMovies api item").movies
     }
 
     private suspend fun getMovieDetailsWithCredits(movieId : Int) : MovieDetailsWithCreditsDTO = withContext(Dispatchers.IO) {
-        return@withContext RetrofitModule.moviesApi.movieDetailsWithCredits(movieId).log("getMovieDetailsWithCredits api item")
+        RetrofitModule.moviesApi.movieDetailsWithCredits(movieId).log("getMovieDetailsWithCredits api item")
     }
 
     private interface MoviesApi {

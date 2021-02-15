@@ -16,7 +16,7 @@ data class MovieDTO (
     val overview: String,
 
     @SerialName("release_date")
-    val releaseDate: String,
+    val releaseDate: String? = null,
 
     @SerialName("genre_ids")
     val genreIDS: List<Long>,

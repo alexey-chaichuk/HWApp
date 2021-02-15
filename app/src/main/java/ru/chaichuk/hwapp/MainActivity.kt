@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commitNow
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import ru.chaichuk.hwapp.api_v3.MovieDbApi
 import ru.chaichuk.hwapp.data.Movie
@@ -34,7 +36,7 @@ class MainActivity :
                 val id = intent.data?.lastPathSegment?.toIntOrNull()
                 id?.apply {
                     Log.d("HWApp", "Handle intent : ${id}")
-                    runBlocking {
+                    lifecycleScope.launch() {
                         val movie = MovieDbApi().getMovieByIdFromNet(id)
                         HWApp.appMovieNotification().dismissNotification(id)
                         movie?.apply { onMovieClick(movie)}

@@ -53,7 +53,7 @@ data class MovieDetailsDTO (
     val productionCountries: List<ProductionCountryDTO>,
 
     @SerialName("release_date")
-    val releaseDate: String,
+    val releaseDate: String? = null,
 
     @SerialName("revenue")
     val revenue: Long,
