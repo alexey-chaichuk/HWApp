@@ -58,7 +58,7 @@ data class MovieDetailsWithCreditsDTO (
     val revenue: Long,
 
     @SerialName("runtime")
-    val runtime: Long,
+    val runtime: Long? = 60,
 
     @SerialName("spoken_languages")
     val spokenLanguages: List<SpokenLanguageDTO>,

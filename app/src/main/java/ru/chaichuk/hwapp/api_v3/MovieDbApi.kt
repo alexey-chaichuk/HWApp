@@ -50,7 +50,7 @@ class MovieDbApi {
                     movieDTO.voteAverage.toFloat(),
                     movieDTO.voteCount.toInt(),
                     if (movieDTO.adult) 16 else 13,
-                    movieDetailsWithCreditsDTO.runtime.toInt(),
+                    movieDetailsWithCreditsDTO.runtime?.toInt() ?: 60,
                     genres,
                     actors,
                     true
@@ -72,7 +72,7 @@ class MovieDbApi {
                 movieDTO.voteAverage.toFloat(),
                 movieDTO.voteCount.toInt(),
                 if (movieDTO.adult) 16 else 13,
-                movieDTO.runtime.toInt(),
+                movieDTO.runtime?.toInt() ?: 60,
                 movieDTO.genres.map { Genre(it.id.toInt(), it.name) },
                 movieDTO.credits.cast.mapNotNull { castDTO ->
                     castDTO.profilePath?.let { picture ->
