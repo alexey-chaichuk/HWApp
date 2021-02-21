@@ -33,8 +33,9 @@ class MoviesListAdapter(private val clickListener: OnRecyclerItemClicked) :
             is MoviesDataViewHolder -> {
                 holder.onBind(movies[position])
                 holder.itemView.setOnClickListener {
-                    clickListener.onClick(movies[position])
+                    clickListener.onClick(movies[position], it)
                 }
+                holder.itemView.transitionName = movies[position].id.toString()
             }
         }
     }
@@ -90,5 +91,5 @@ private val RecyclerView.ViewHolder.context
     get() = this.itemView.context
 
 interface OnRecyclerItemClicked {
-    fun onClick(movie: Movie)
+    fun onClick(movie: Movie, view : View)
 }

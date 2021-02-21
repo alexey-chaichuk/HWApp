@@ -7,7 +7,11 @@ import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialElevationScale
+import ru.chaichuk.hwapp.BuildConfig
 import ru.chaichuk.hwapp.R
 import ru.chaichuk.hwapp.data.Movie
 import ru.chaichuk.hwapp.listAdapters.MoviesListAdapter
@@ -39,7 +43,21 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rvMoviesList = view.findViewById(R.id.rv_movies_list)
-        rvMoviesList?.adapter = MoviesListAdapter(clickListener)
+        rvMoviesList?.apply {
+            adapter = MoviesListAdapter(clickListener)
+            postponeEnterTransition()
+            viewTreeObserver.addOnPreDrawListener {
+                startPostponedEnterTransition()
+                true
+            }
+        }
+        exitTransition = MaterialElevationScale(false).apply {
+            duration = BuildConfig.TRANSITION_DURATION
+        }
+        reenterTransition = MaterialElevationScale(true).apply {
+            duration = BuildConfig.TRANSITION_DURATION
+        }
+
         pbLoadingState = view.findViewById(R.id.movies_list_loader)
 
         viewModel.moviesList.observe(this.viewLifecycleOwner, this::updateMoviesList)
@@ -62,13 +80,13 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
     }
 
 
-    private fun doOnClick(movie: Movie) {
-        listener?.onMovieClick(movie)
+    private fun doOnClick(movie: Movie, view : View) {
+        listener?.onMovieClick(movie, view)
     }
 
     private val clickListener = object : OnRecyclerItemClicked {
-        override fun onClick(movie: Movie) {
-            doOnClick(movie)
+        override fun onClick(movie: Movie, view: View) {
+            doOnClick(movie, view)
         }
     }
 
