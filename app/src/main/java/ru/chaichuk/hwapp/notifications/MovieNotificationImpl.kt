@@ -9,12 +9,10 @@ import androidx.annotation.WorkerThread
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.graphics.drawable.IconCompat
 import androidx.core.net.toUri
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 import ru.chaichuk.hwapp.BuildConfig
 import ru.chaichuk.hwapp.MainActivity

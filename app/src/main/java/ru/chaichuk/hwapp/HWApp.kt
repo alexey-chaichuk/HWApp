@@ -8,7 +8,6 @@ import coil.ImageLoaderFactory
 import coil.util.CoilUtils
 import okhttp3.OkHttpClient
 import ru.chaichuk.hwapp.backgroundWorkers.DbUpdateWorker
-import ru.chaichuk.hwapp.db.MoviesDataBase
 import ru.chaichuk.hwapp.db.MoviesDbRepository
 import ru.chaichuk.hwapp.notifications.MovieNotification
 import ru.chaichuk.hwapp.notifications.MovieNotificationImpl

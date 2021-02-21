@@ -5,12 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.commitNow
 import androidx.lifecycle.lifecycleScope
-import androidx.transition.TransitionInflater
-import com.google.android.material.transition.MaterialContainerTransform
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import ru.chaichuk.hwapp.api_v3.MovieDbApi
 import ru.chaichuk.hwapp.data.Movie
 import ru.chaichuk.hwapp.fragments.MoviesDetailsFragment

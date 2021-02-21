@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import coil.request.CachePolicy
 import com.bumptech.glide.Glide
 import ru.chaichuk.hwapp.R
 import ru.chaichuk.hwapp.data.Actor
