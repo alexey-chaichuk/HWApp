@@ -35,7 +35,6 @@ android {
             buildConfigField "String", "BASE_IMAGE_W780_URL", "\"https://image.tmdb.org/t/p/w780\""
             buildConfigField "String", "BASE_IMAGE_W200_URL", "\"https://image.tmdb.org/t/p/w200\""
             buildConfigField "String", "API_KEY", API_KEY_PROPERTY
-            buildConfigField "long", "TRANSITION_DURATION", "3000"
         }
     }
     compileOptions {

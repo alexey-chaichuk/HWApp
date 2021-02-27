@@ -82,6 +82,7 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val transitionDuration = requireContext().resources.getInteger(R.integer.transition_duration).toLong()
         val textViewBack = view.findViewById<TextView>(R.id.textViewBack)
         textViewBack.setOnClickListener {
             listener?.onDetailsBack()
@@ -110,13 +111,13 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
         }
 
         sharedElementEnterTransition = MaterialContainerTransform().apply {
-            duration = BuildConfig.TRANSITION_DURATION
+            duration = transitionDuration
         }
         exitTransition = MaterialElevationScale(false).apply {
-            duration = BuildConfig.TRANSITION_DURATION
+            duration = transitionDuration
         }
         reenterTransition = MaterialElevationScale(true).apply {
-            duration = BuildConfig.TRANSITION_DURATION
+            duration = transitionDuration
         }
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }

@@ -41,6 +41,7 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val transitionDuration = requireContext().resources.getInteger(R.integer.transition_duration).toLong()
         rvMoviesList = view.findViewById(R.id.rv_movies_list)
         rvMoviesList?.apply {
             adapter = MoviesListAdapter(clickListener)
@@ -51,10 +52,10 @@ class MoviesListFragment : Fragment(R.layout.fragment_movies_list) {
             }
         }
         exitTransition = MaterialElevationScale(false).apply {
-            duration = BuildConfig.TRANSITION_DURATION
+            duration = transitionDuration
         }
         reenterTransition = MaterialElevationScale(true).apply {
-            duration = BuildConfig.TRANSITION_DURATION
+            duration = transitionDuration
         }
 
         pbLoadingState = view.findViewById(R.id.movies_list_loader)
