@@ -18,14 +18,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import coil.request.CachePolicy
-import ru.chaichuk.hwapp.listAdapters.ActorsListAdapter
+import com.bumptech.glide.Glide
+import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialElevationScale
+import ru.chaichuk.hwapp.BuildConfig
 import ru.chaichuk.hwapp.R
 import ru.chaichuk.hwapp.data.Movie
+import ru.chaichuk.hwapp.listAdapters.ActorsListAdapter
 import ru.chaichuk.hwapp.viewModels.MovieDetailsViewModel
 import ru.chaichuk.hwapp.viewModels.MovieDetailsViewModelFactory
 import java.util.*
@@ -78,6 +82,7 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val transitionDuration = requireContext().resources.getInteger(R.integer.transition_duration).toLong()
         val textViewBack = view.findViewById<TextView>(R.id.textViewBack)
         textViewBack.setOnClickListener {
             listener?.onDetailsBack()
@@ -100,7 +105,22 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
         }
 
         viewModel.movie.observe(this.viewLifecycleOwner, this::updateMovie)
-        arguments?.getParcelable<Movie>("movie")?.let { viewModel.loadMovie(it) }
+        arguments?.getParcelable<Movie>("movie")?.let {
+            viewModel.loadMovie(it)
+            view.transitionName = it.id.toString()
+        }
+
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            duration = transitionDuration
+        }
+        exitTransition = MaterialElevationScale(false).apply {
+            duration = transitionDuration
+        }
+        reenterTransition = MaterialElevationScale(true).apply {
+            duration = transitionDuration
+        }
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
     }
 
     override fun onDestroyView() {
@@ -110,10 +130,14 @@ class MoviesDetailsFragment : Fragment(R.layout.fragment_movies_details) {
 
     private fun updateMovie(movie: Movie) {
         Log.d("HWApp", movie.backdrop)
-        ivMovieBackdrop?.load(movie.backdrop) {
-            crossfade(true)
-            diskCachePolicy(CachePolicy.ENABLED)
-        }
+        // Coil is not working for return transition, so moved to Glide
+        //ivMovieBackdrop?.load(movie.backdrop)
+        /*requireContext().imageLoader.enqueue(ImageRequest.Builder(requireContext())
+            .data(movie.backdrop)
+            .target { ivMovieBackdrop.drawable = it }
+            .build()
+        )*/
+        ivMovieBackdrop?.let { Glide.with(requireContext()).load(movie.backdrop).into(it) }
         tvMovieTitle?.text = movie.title
         rbMovie?.rating = movie.ratings / 2
         tvGenre?.text = movie.genres.joinToString { genre -> genre.name }

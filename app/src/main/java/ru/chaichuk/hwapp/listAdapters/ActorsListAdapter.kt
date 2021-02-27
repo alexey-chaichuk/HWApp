@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import coil.request.CachePolicy
+import com.bumptech.glide.Glide
 import ru.chaichuk.hwapp.R
 import ru.chaichuk.hwapp.data.Actor
 
@@ -47,10 +46,8 @@ private class ActorsDataViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
         Log.d("HWApp", actor.picture)
         // next code crashes genymotion's emulator on linux (with or without crossfade)
         // but works on google's emulator without problems
-        avatar.load(actor.picture) {
-            crossfade(true)
-            diskCachePolicy(CachePolicy.ENABLED)
-        }
+        //avatar.load(actor.picture)
+        Glide.with(itemView).load(actor.picture).into(avatar)
         name.text = actor.name
     }
 }

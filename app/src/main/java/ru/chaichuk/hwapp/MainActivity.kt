@@ -3,11 +3,10 @@ package ru.chaichuk.hwapp
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.commitNow
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import ru.chaichuk.hwapp.api_v3.MovieDbApi
 import ru.chaichuk.hwapp.data.Movie
 import ru.chaichuk.hwapp.fragments.MoviesDetailsFragment
@@ -35,24 +34,38 @@ class MainActivity :
             Intent.ACTION_VIEW -> {
                 val id = intent.data?.lastPathSegment?.toIntOrNull()
                 id?.apply {
-                    Log.d("HWApp", "Handle intent : ${id}")
+                    Log.d("HWApp", "Handle intent : $id")
                     lifecycleScope.launch() {
                         val movie = MovieDbApi().getMovieByIdFromNet(id)
                         HWApp.appMovieNotification().dismissNotification(id)
-                        movie?.apply { onMovieClick(movie)}
+                        movie?.apply { onMovieDeepLink(movie)}
                     }
                 }
             }
         }
     }
 
-    override fun onMovieClick(movie: Movie) {
+    private fun onMovieDeepLink(movie: Movie) {
+
         supportFragmentManager.beginTransaction()
             .replace(R.id.mainFrame, MoviesDetailsFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable("movie", movie)
                 }
             })
+            .addToBackStack(null)
+            .commit()
+    }
+
+    override fun onMovieClick(movie: Movie, view: View) {
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.mainFrame, MoviesDetailsFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable("movie", movie)
+                }
+            })
+            .addSharedElement(view, movie.id.toString())
             .addToBackStack(null)
             .commit()
     }

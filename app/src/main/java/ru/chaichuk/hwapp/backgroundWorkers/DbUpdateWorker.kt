@@ -4,12 +4,8 @@ import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import ru.chaichuk.hwapp.HWApp
 import ru.chaichuk.hwapp.api_v3.MovieDbApi
-import ru.chaichuk.hwapp.db.MoviesDbRepository
-import java.lang.Exception
 
 class DbUpdateWorker(context: Context, params: WorkerParameters): CoroutineWorker(context, params) {
 
